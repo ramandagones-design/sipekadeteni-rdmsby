@@ -1,0 +1,3138 @@
+<!doctype html>
+<html lang="id" class="h-full scroll-smooth">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <title>SIPEKA-DETENI - Rudenim Surabaya</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
+    html { scroll-behavior: smooth; font-size: 15px; }
+    body { color: #202124; }
+    
+    .glass-card { background: #ffffff; border: 1px solid #dadce0; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    .gradient-primary { background: linear-gradient(135deg, #003D7A 0%, #001F4D 100%); }
+    .gradient-accent { background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); }
+    
+    .status-pill { padding: 5px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; letter-spacing: 0.2px; }
+    .risk-high { background: #f8d7da; color: #721c24; }
+    .risk-medium { background: #fff3cd; color: #856404; }
+    .risk-low { background: #d4edda; color: #155724; }
+    
+    .sidebar-item { 
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+      color: rgba(255,255,255,0.9); 
+      padding: 11px 16px; 
+      border-radius: 8px; 
+      margin: 3px 0; 
+      font-size: 14px;
+    }
+    .sidebar-item:hover { background: rgba(255,255,255,0.15); transform: translateX(2px); }
+    .sidebar-item.active { 
+      background: rgba(212, 175, 55, 0.25); 
+      border-left: 3px solid #D4AF37; 
+      padding-left: 13px;
+      font-weight: 500;
+    }
+    
+    .table-row { transition: background-color 0.15s ease; }
+    .table-row:hover { background: #f9fafb; }
+    
+    .modal-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); }
+    
+    .input-field { 
+      transition: all 0.2s ease; 
+      border: 1px solid #dadce0;
+      background: #ffffff;
+      font-size: 14px;
+    }
+    .input-field:focus { 
+      border-color: #003D7A; 
+      box-shadow: 0 0 0 3px rgba(0, 61, 122, 0.1), inset 0 1px 2px rgba(0,0,0,0.02); 
+      outline: none; 
+    }
+    .input-field::placeholder { color: #5f6368; font-weight: 400; }
+    
+    .btn-primary { 
+      background: #003D7A; 
+      color: white; 
+      font-weight: 500; 
+      border: none; 
+      cursor: pointer; 
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 14px;
+    }
+    .btn-primary:hover { 
+      background: #002654; 
+      box-shadow: 0 2px 4px rgba(0, 61, 122, 0.2);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    
+    .btn-gold { 
+      background: #D4AF37; 
+      color: #1a1a1a; 
+      font-weight: 500; 
+      border: none; 
+      cursor: pointer; 
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 14px;
+    }
+    .btn-gold:hover { 
+      background: #c9a227; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+      transform: translateY(-1px);
+    }
+    .btn-gold:active { transform: scale(0.98); }
+    
+    .stat-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .stat-card:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #bdc1c6; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #80868b; }
+    
+    /* Typography enhancements */
+    h1, h2, h3, h4, h5, h6 { letter-spacing: -0.3px; font-weight: 600; }
+    p { line-height: 1.6; }
+    
+    /* Enhanced focus states */
+    button:focus, input:focus, select:focus, textarea:focus {
+      outline: none;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full bg-slate-100 overflow-hidden">
+  <!-- Mode Selector --> <!-- Mode Selector (Top Right - In Public Landing) -->
+  <div id="mode-selector-dropdown" class="fixed top-4 right-4 z-40 bg-white rounded-lg shadow-lg border border-slate-200 hidden overflow-hidden"><button onclick="selectMode('desktop')" class="w-full px-4 py-3 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium border-b border-slate-100">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0v3m6-13h3.75m0 0l.75-3M15 8h4m0 0v3m0-3l.75 3M15 8l-.75-3" />
+    </svg> Mode Desktop </button> <button onclick="selectMode('mobile')" class="w-full px-4 py-3 text-left hover:bg-slate-50 flex items-center gap-2 text-slate-700 font-medium">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+    </svg> Mode Mobile </button>
+  </div><button id="mode-toggle-btn" onclick="toggleModeSelectorDropdown()" class="fixed top-4 right-4 z-40 bg-white hover:bg-slate-100 text-slate-700 px-4 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-all shadow-lg border border-slate-200">
+   <svg id="mode-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0v3m6-13h3.75m0 0l.75-3M15 8h4m0 0v3m0-3l.75 3M15 8l-.75-3" />
+   </svg><span id="mode-label">Desktop</span> </button><!-- Login Screen --> <!-- Public Preview Landing Page -->
+  <div id="public-landing" class="h-full w-full flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+   <!-- Navigation -->
+   <nav class="glass-card border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+     <div id="landing-logo-container" class="w-10 h-10 rounded-lg gradient-accent flex items-center justify-center shadow-md"><img id="landing-logo-img" src="" alt="Logo" class="w-full h-full object-cover rounded-lg hidden">
+      <svg id="landing-logo-default" class="w-6 h-6 text-white" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <!-- Shield Outer --> <path d="M12 2 L21 5 L21 11 C21 16.5 12 22 12 22 C12 22 3 16.5 3 11 L3 5 L12 2 Z" fill="#D4AF37" /> <!-- Shield Main Body --> <path d="M12 3.5 L20 5.8 L20 11 C20 15.5 12 20.5 12 20.5 C12 20.5 4 15.5 4 11 L4 5.8 L12 3.5 Z" fill="#8B1428" /> <!-- Center Vertical Stripe --> <line x1="12" y1="4" x2="12" y2="20" stroke="#D4AF37" stroke-width="1.2" /> <!-- Horizontal Cross --> <line x1="8.5" y1="11.5" x2="15.5" y2="11.5" stroke="#D4AF37" stroke-width="1" /> <!-- Center Circle --> <circle cx="12" cy="11.5" r="1.8" fill="#D4AF37" />
+      </svg>
+     </div>
+     <div>
+      <h1 id="landing-title" class="text-xl font-bold text-slate-800">SIPEKA-DETENI</h1>
+      <p class="text-xs text-slate-500">Sistem Informasi Deteni</p>
+     </div>
+    </div><button onclick="goToLogin()" class="btn-gold text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-all">
+     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+     </svg> Masuk Sistem </button>
+   </nav><!-- Main Content -->
+   <div class="flex-1 overflow-auto">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+     <!-- Hero Section -->
+     <div class="mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Sistem Informasi Deteni Imigrasi</h2>
+      <p class="text-lg text-slate-600 max-w-2xl mb-6">Platform terpadu untuk manajemen data dan tracking deportasi di Rumah Detensi Imigrasi Surabaya</p>
+      <div class="flex items-center gap-4"><button onclick="goToLogin()" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg> Akses Sistem </button> <button onclick="scrollToStats()" class="px-8 py-3 rounded-lg font-semibold border-2 border-slate-800 text-slate-800 hover:bg-slate-800 hover:text-white transition-colors">Lihat Statistik</button>
+      </div>
+     </div><!-- Statistics Section -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="landing-stats-container">
+      <div class="glass-card rounded-2xl p-8 border border-slate-200 text-center">
+       <div class="w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+       </div>
+       <h3 class="text-4xl font-bold text-slate-800" id="landing-stat-total">0</h3>
+       <p class="text-slate-600 font-medium mt-2">Total Deteni</p>
+      </div>
+      <div class="glass-card rounded-2xl p-8 border border-slate-200 text-center">
+       <div class="w-16 h-16 rounded-xl bg-red-100 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+       </div>
+       <h3 class="text-4xl font-bold text-red-600" id="landing-stat-high-risk">0</h3>
+       <p class="text-slate-600 font-medium mt-2">Risiko Tinggi</p>
+      </div>
+      <div class="glass-card rounded-2xl p-8 border border-slate-200 text-center">
+       <div class="w-16 h-16 rounded-xl bg-amber-100 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h3 class="text-4xl font-bold text-amber-600" id="landing-stat-pending">0</h3>
+       <p class="text-slate-600 font-medium mt-2">Proses Deportasi</p>
+      </div>
+      <div class="glass-card rounded-2xl p-8 border border-slate-200 text-center">
+       <div class="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+       </div>
+       <h3 class="text-4xl font-bold text-green-600" id="landing-stat-deported">0</h3>
+       <p class="text-slate-600 font-medium mt-2">Sudah Dideportasi</p>
+      </div>
+     </div><!-- Detainees Table -->
+     <div class="glass-card rounded-2xl border border-slate-200 overflow-hidden mb-12">
+      <div class="gradient-primary px-8 py-6">
+       <h3 class="text-white font-bold text-xl flex items-center gap-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg> Daftar Deteni Terkini</h3>
+      </div>
+      <div class="overflow-x-auto">
+       <table class="w-full">
+        <thead class="bg-slate-50 border-b border-slate-200">
+         <tr>
+          <th class="text-left px-8 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Nama</th>
+          <th class="text-left px-8 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Negara Asal</th>
+          <th class="text-left px-8 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Jenis Pelanggaran</th>
+          <th class="text-left px-8 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Tanggal Masuk</th>
+          <th class="text-left px-8 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Tingkat Risiko</th>
+          <th class="text-left px-8 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Status Deportasi</th>
+         </tr>
+        </thead>
+        <tbody id="landing-table-body" class="divide-y divide-slate-100">
+         <tr>
+          <td colspan="6" class="px-8 py-8 text-center text-slate-500">Memuat data...</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div><!-- Risk Distribution -->
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+      <div class="glass-card rounded-2xl border-2 border-red-200 p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-red-100 flex items-center justify-center">
+         <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+         </svg>
+        </div>
+        <div>
+         <h4 class="font-bold text-red-700 text-lg">Risiko Tinggi</h4>
+         <p class="text-red-600 text-sm">Perlu pengawasan ketat</p>
+        </div>
+       </div>
+       <div id="landing-risk-high" class="space-y-2">
+        <p class="text-slate-500 text-sm text-center py-4">-</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl border-2 border-amber-200 p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-amber-100 flex items-center justify-center">
+         <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+        </div>
+        <div>
+         <h4 class="font-bold text-amber-700 text-lg">Risiko Sedang</h4>
+         <p class="text-amber-600 text-sm">Perlu pemantauan</p>
+        </div>
+       </div>
+       <div id="landing-risk-medium" class="space-y-2">
+        <p class="text-slate-500 text-sm text-center py-4">-</p>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl border-2 border-green-200 p-8">
+       <div class="flex items-center gap-4 mb-6">
+        <div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+         <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+        </div>
+        <div>
+         <h4 class="font-bold text-green-700 text-lg">Risiko Rendah</h4>
+         <p class="text-green-600 text-sm">Pengawasan standar</p>
+        </div>
+       </div>
+       <div id="landing-risk-low" class="space-y-2">
+        <p class="text-slate-500 text-sm text-center py-4">-</p>
+       </div>
+      </div>
+     </div><!-- Deportation Status Overview -->
+     <div class="glass-card rounded-2xl border border-slate-200 p-8 mb-12">
+      <h3 class="font-bold text-slate-800 text-xl mb-6 flex items-center gap-2">
+       <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+       </svg> Status Deportasi</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+       <div class="bg-slate-50 rounded-xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4"><span class="font-medium text-slate-700">Menunggu</span>
+         <div class="w-3 h-3 rounded-full bg-slate-400"></div>
+        </div>
+        <p class="text-3xl font-bold text-slate-800" id="landing-deport-pending">0</p>
+       </div>
+       <div class="bg-blue-50 rounded-xl p-6 border border-blue-200">
+        <div class="flex items-center justify-between mb-4"><span class="font-medium text-blue-700">Diproses</span>
+         <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+        </div>
+        <p class="text-3xl font-bold text-blue-700" id="landing-deport-processing">0</p>
+       </div>
+       <div class="bg-amber-50 rounded-xl p-6 border border-amber-200">
+        <div class="flex items-center justify-between mb-4"><span class="font-medium text-amber-700">Terjadwal</span>
+         <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+        </div>
+        <p class="text-3xl font-bold text-amber-700" id="landing-deport-scheduled">0</p>
+       </div>
+       <div class="bg-green-50 rounded-xl p-6 border border-green-200">
+        <div class="flex items-center justify-between mb-4"><span class="font-medium text-green-700">Selesai</span>
+         <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        </div>
+        <p class="text-3xl font-bold text-green-700" id="landing-deport-completed">0</p>
+       </div>
+      </div>
+     </div><!-- Daily Notes Submission Form for Public -->
+     <div class="glass-card rounded-2xl border border-slate-200 p-8 mb-12">
+      <div class="flex items-center gap-3 mb-6">
+       <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+       </div>
+       <div>
+        <h3 class="text-2xl font-bold text-slate-800">Kirim Catatan Harian</h3>
+        <p class="text-slate-600">Berikan observasi atau informasi tentang kondisi deteni</p>
+       </div>
+      </div>
+      <form id="landing-note-form" class="space-y-6" onsubmit="handleLandingNoteSubmit(event)">
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div><label class="block text-sm font-medium text-slate-700 mb-2">Pilih Deteni *</label> <select id="landing-note-detainee" required class="input-field w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-indigo-400 bg-white text-slate-700"> <option value="">-- Pilih Deteni --</option> </select>
+        </div>
+        <div><label class="block text-sm font-medium text-slate-700 mb-2">Tanggal Observasi *</label> <input type="date" id="landing-note-date" required class="input-field w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-indigo-400 bg-white text-slate-700">
+        </div>
+       </div>
+       <div><label class="block text-sm font-medium text-slate-700 mb-2">Catatan Observasi *</label> <textarea id="landing-note-content" required rows="4" class="input-field w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-indigo-400 bg-white text-slate-700 resize-none" placeholder="Tuliskan observasi, kondisi, atau informasi penting tentang deteni..."></textarea>
+       </div>
+       <div class="flex justify-end"><button type="submit" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-all"> <span id="landing-btn-note-text">
+          <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>Kirim Catatan </span> <span id="landing-btn-note-loading" class="hidden">
+          <svg class="w-5 h-5 animate-spin inline" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>Mengirim... </span> </button>
+       </div>
+      </form>
+     </div><!-- Recent Daily Notes Display -->
+     <div class="glass-card rounded-2xl border border-slate-200 p-8 mb-12">
+      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+       <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+       </svg>Catatan Harian Terbaru</h3>
+      <div id="landing-recent-notes" class="space-y-4">
+       <p class="text-slate-500 text-center py-8">Belum ada catatan harian</p>
+      </div>
+     </div><!-- Footer -->
+     <div class="text-center py-8 border-t border-slate-200">
+      <p class="text-slate-600 mb-4">© 2024 Rumah Detensi Imigrasi Surabaya. Sistem informasi terintegrasi untuk manajemen deteni.</p>
+      <p class="text-sm text-slate-500">Data diperbarui secara real-time untuk keperluan administrasi dan tracking. Catatan Anda berkontribusi pada sistem manajemen.</p>
+     </div>
+    </div>
+   </div>
+  </div><!-- Login Screen -->
+  <div id="login-screen" class="h-full w-full fixed inset-0 z-50 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 flex items-center justify-center p-4 overflow-y-auto hidden">
+   <!-- Back Button --> <button onclick="backToLanding()" class="absolute top-6 left-6 flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg><span class="text-sm font-medium">Kembali</span> </button>
+   <div class="w-full max-w-md my-auto">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+     <h1 class="text-3xl font-bold text-white mb-2">SIPEKA-DETENI</h1>
+     <p class="text-slate-400">Rumah Detensi Imigrasi Surabaya</p>
+    </div><!-- Login Mode Selection -->
+    <div class="glass-card rounded-2xl p-8 border border-white/10 shadow-2xl mb-6">
+     <form id="login-form" onsubmit="handleLogin(event)">
+      <!-- Username -->
+      <div class="mb-5">
+       <label class="block text-sm font-medium text-black mb-2">Username</label> <input type="text" id="login-username" required class="input-field w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-black placeholder-slate-600 focus:outline-none focus:border-amber-400" placeholder="Masukkan username">
+      </div><!-- Password -->
+      <div class="mb-6">
+       <label class="block text-sm font-medium text-black mb-2">Password</label>
+       <div class="relative"><input type="password" id="login-password" required class="input-field w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-black placeholder-slate-600 focus:outline-none focus:border-amber-400" placeholder="Masukkan password"> <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors">
+         <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+         </svg></button>
+       </div>
+      </div><!-- Login Button --> <button type="submit" id="login-btn" class="btn-gold w-full text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"> <span id="login-btn-text">Masuk ke Sistem</span> <span id="login-btn-loading" class="hidden">
+        <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg></span> </button>
+     </form>
+    </div><!-- Footer -->
+    <div class="text-center">
+     <p class="text-sm text-slate-400">© 2024 Rumah Detensi Imigrasi Surabaya</p>
+    </div>
+   </div>
+  </div><!-- Main App (Hidden Initially) -->
+  <div id="app" class="h-full flex hidden">
+   <!-- Sidebar Toggle Button (Mobile) --> <button id="sidebar-toggle" class="md:hidden fixed top-4 left-4 z-40 p-2 bg-blue-900 text-white rounded-lg">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg></button> <!-- Sidebar -->
+   <aside id="sidebar" class="w-72 gradient-primary flex flex-col shadow-2xl z-30 fixed md:relative h-full transition-all duration-300 -translate-x-full md:translate-x-0">
+    <!-- Logo Section -->
+    <div class="p-6 border-b border-white/10">
+     <div class="flex items-center gap-3">
+      <div id="logo-container" class="w-12 h-12 rounded-xl gradient-accent flex items-center justify-center shadow-lg overflow-hidden"><img id="logo-img" src="" alt="Logo" class="w-full h-full object-cover hidden">
+       <svg id="logo-default" class="w-8 h-8 text-white" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Shield Outer --> <path d="M12 2 L21 5 L21 11 C21 16.5 12 22 12 22 C12 22 3 16.5 3 11 L3 5 L12 2 Z" fill="#D4AF37" /> <!-- Shield Main Body --> <path d="M12 3.5 L20 5.8 L20 11 C20 15.5 12 20.5 12 20.5 C12 20.5 4 15.5 4 11 L4 5.8 L12 3.5 Z" fill="#8B1428" /> <!-- Center Vertical Stripe --> <line x1="12" y1="4" x2="12" y2="20" stroke="#D4AF37" stroke-width="1.2" /> <!-- Horizontal Cross --> <line x1="8.5" y1="11.5" x2="15.5" y2="11.5" stroke="#D4AF37" stroke-width="1" /> <!-- Center Circle --> <circle cx="12" cy="11.5" r="1.8" fill="#D4AF37" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="system-title" class="text-white font-bold text-lg leading-tight">SIPEKA-DETENI</h1>
+       <p class="text-slate-300 text-xs">Rudenim Surabaya</p>
+      </div>
+     </div><button onclick="openLogoUploadModal()" class="mt-3 w-full py-2 px-3 bg-white/10 hover:bg-white/20 rounded-lg text-white text-xs font-medium transition-colors flex items-center justify-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg> Ubah Logo </button>
+    </div><!-- Navigation -->
+    <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+     <button onclick="setActiveView('dashboard')" class="sidebar-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="dashboard">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+      </svg><span class="font-medium">Dashboard</span> </button> <button onclick="setActiveView('detainees')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="detainees">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg><span class="font-medium">Data Deteni</span> </button> <button onclick="setActiveView('daily-notes')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="daily-notes">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg><span class="font-medium">Catatan Harian</span> </button> <button onclick="setActiveView('deportation')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="deportation">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg><span class="font-medium">Tracking Deportasi</span> </button> <button onclick="setActiveView('risk-assessment')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="risk-assessment">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg><span class="font-medium">Mitigasi Risiko</span> </button> <!-- Admin Section -->
+     <div id="admin-section" class="hidden pt-4 mt-4 border-t border-white/20">
+      <p class="text-xs font-semibold text-white/60 uppercase tracking-wider px-4 mb-3">Administrator</p><button onclick="setActiveView('admin-panel')" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="admin-panel">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+       </svg><span class="font-medium">Panel Admin</span> </button> <button onclick="openPublicPreview()" class="sidebar-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/90" data-view="public-preview">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+       </svg><span class="font-medium">Preview Publik</span> </button>
+     </div>
+    </nav><!-- User Info -->
+    <div class="p-4 border-t border-white/10">
+     <div class="flex items-center gap-3 px-3 py-2">
+      <div class="w-10 h-10 rounded-full gradient-accent flex items-center justify-center">
+       <span class="text-white font-bold text-sm">PK</span>
+      </div>
+      <div class="flex-1 min-w-0">
+       <p class="text-white font-medium text-sm truncate">Petugas Keamanan</p>
+       <p class="text-slate-400 text-xs">Rudenim Surabaya</p>
+      </div>
+     </div>
+    </div>
+   </aside><!-- Main Content -->
+   <main class="flex-1 flex flex-col h-full overflow-hidden">
+    <!-- Header -->
+    <header class="glass-card border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+     <div>
+      <h2 id="page-title" class="text-xl font-bold text-slate-800">Dashboard</h2>
+      <p id="institution-name" class="text-slate-500 text-sm">Rumah Detensi Imigrasi Surabaya</p>
+     </div>
+     <div class="flex items-center gap-4">
+      <div class="relative">
+       <input type="text" id="global-search" placeholder="Cari deteni..." class="input-field w-64 pl-10 pr-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none">
+       <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+       </svg>
+      </div><span class="text-sm text-slate-600" id="current-date"></span>
+     </div>
+    </header><!-- Content Area -->
+    <div class="flex-1 overflow-auto p-8">
+     <!-- Dashboard View -->
+     <div id="view-dashboard" class="view-content">
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="stat-total">0</h3>
+        <p class="text-slate-500 text-sm">Total Deteni</p>
+       </div>
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="stat-high-risk">0</h3>
+        <p class="text-slate-500 text-sm">Risiko Tinggi</p>
+       </div>
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="stat-pending">0</h3>
+        <p class="text-slate-500 text-sm">Proses Deportasi</p>
+       </div>
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="stat-deported">0</h3>
+        <p class="text-slate-500 text-sm">Sudah Dideportasi</p>
+       </div>
+      </div><!-- Recent Activity -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <div class="glass-card rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+         <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg> Deteni Terbaru</h3>
+        <div id="recent-detainees" class="space-y-3">
+         <p class="text-slate-500 text-sm text-center py-4">Belum ada data deteni</p>
+        </div>
+       </div>
+       <div class="glass-card rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+         <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+         </svg> Catatan Harian Terbaru</h3>
+        <div id="recent-notes" class="space-y-3">
+         <p class="text-slate-500 text-sm text-center py-4">Belum ada catatan harian</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Detainees View -->
+     <div id="view-detainees" class="view-content hidden">
+      <div class="flex items-center justify-between mb-6">
+       <div class="flex items-center gap-4">
+        <select id="filter-nationality" class="input-field px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none"> <option value="">Semua Negara</option> </select> <select id="filter-risk" class="input-field px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none"> <option value="">Semua Risiko</option> <option value="high">Tinggi</option> <option value="medium">Sedang</option> <option value="low">Rendah</option> </select>
+       </div><button onclick="openDetaineeModal()" class="btn-gold text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg> Tambah Deteni </button>
+      </div>
+      <div class="glass-card rounded-2xl border border-slate-200 overflow-hidden">
+       <div class="overflow-x-auto">
+        <table class="w-full">
+         <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">ID/Nama</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Negara</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Pelanggaran</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Risiko</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Aksi</th>
+          </tr>
+         </thead>
+         <tbody id="detainees-table" class="divide-y divide-slate-100">
+          <tr>
+           <td colspan="6" class="px-6 py-8 text-center text-slate-500">Belum ada data deteni</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div><!-- Daily Notes View -->
+     <div id="view-daily-notes" class="view-content hidden">
+      <div class="flex items-center justify-between mb-6">
+       <div class="flex items-center gap-4">
+        <select id="filter-note-detainee" class="input-field px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none min-w-48"> <option value="">Semua Deteni</option> </select> <input type="date" id="filter-note-date" class="input-field px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none">
+       </div><button onclick="openNoteModal()" class="btn-gold text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg> Tambah Catatan </button>
+      </div>
+      <div id="daily-notes-list" class="space-y-4">
+       <div class="glass-card rounded-2xl border border-slate-200 p-6 text-center">
+        <p class="text-slate-500">Belum ada catatan harian</p>
+       </div>
+      </div>
+     </div><!-- Deportation View -->
+     <div id="view-deportation" class="view-content hidden">
+      <div class="flex items-center justify-between mb-6">
+       <div class="flex items-center gap-4">
+        <select id="filter-deport-status" class="input-field px-4 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none"> <option value="">Semua Status</option> <option value="pending">Menunggu</option> <option value="processing">Diproses</option> <option value="scheduled">Terjadwal</option> <option value="completed">Selesai</option> </select>
+       </div>
+      </div><!-- Deportation Pipeline -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+       <div class="glass-card rounded-xl border-2 border-slate-200 p-4">
+        <div class="flex items-center gap-2 mb-3">
+         <div class="w-3 h-3 rounded-full bg-slate-400"></div>
+         <h4 class="font-semibold text-slate-700 text-sm">Menunggu</h4>
+        </div>
+        <div id="pipeline-pending" class="space-y-2 min-h-24"></div>
+       </div>
+       <div class="glass-card rounded-xl border-2 border-blue-200 p-4">
+        <div class="flex items-center gap-2 mb-3">
+         <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+         <h4 class="font-semibold text-blue-700 text-sm">Diproses</h4>
+        </div>
+        <div id="pipeline-processing" class="space-y-2 min-h-24"></div>
+       </div>
+       <div class="glass-card rounded-xl border-2 border-amber-200 p-4">
+        <div class="flex items-center gap-2 mb-3">
+         <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+         <h4 class="font-semibold text-amber-700 text-sm">Terjadwal</h4>
+        </div>
+        <div id="pipeline-scheduled" class="space-y-2 min-h-24"></div>
+       </div>
+       <div class="glass-card rounded-xl border-2 border-green-200 p-4">
+        <div class="flex items-center gap-2 mb-3">
+         <div class="w-3 h-3 rounded-full bg-green-500"></div>
+         <h4 class="font-semibold text-green-700 text-sm">Selesai</h4>
+        </div>
+        <div id="pipeline-completed" class="space-y-2 min-h-24"></div>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl border border-slate-200 overflow-hidden">
+       <div class="overflow-x-auto">
+        <table class="w-full">
+         <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Deteni</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Negara Tujuan</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Tanggal Deportasi</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+           <th class="text-left px-6 py-4 text-xs font-semibold text-slate-600 uppercase tracking-wider">Aksi</th>
+          </tr>
+         </thead>
+         <tbody id="deportation-table" class="divide-y divide-slate-100">
+          <tr>
+           <td colspan="5" class="px-6 py-8 text-center text-slate-500">Belum ada data deportasi</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div><!-- Risk Assessment View -->
+     <div id="view-risk-assessment" class="view-content hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+       <div class="glass-card rounded-2xl border-2 border-red-200 p-6">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-bold text-red-700">Risiko Tinggi</h3>
+          <p class="text-red-600 text-sm">Perlu pengawasan ketat</p>
+         </div>
+        </div>
+        <div id="risk-high-list" class="space-y-2"></div>
+       </div>
+       <div class="glass-card rounded-2xl border-2 border-amber-200 p-6">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-bold text-amber-700">Risiko Sedang</h3>
+          <p class="text-amber-600 text-sm">Perlu pemantauan</p>
+         </div>
+        </div>
+        <div id="risk-medium-list" class="space-y-2"></div>
+       </div>
+       <div class="glass-card rounded-2xl border-2 border-green-200 p-6">
+        <div class="flex items-center gap-3 mb-4">
+         <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-bold text-green-700">Risiko Rendah</h3>
+          <p class="text-green-600 text-sm">Pengawasan standar</p>
+         </div>
+        </div>
+        <div id="risk-low-list" class="space-y-2"></div>
+       </div>
+      </div>
+      <div class="glass-card rounded-2xl border border-slate-200 p-6">
+       <h3 class="font-bold text-slate-800 mb-4">Indikator Manipulasi Informasi</h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-4 bg-slate-50 rounded-xl">
+         <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+          </svg><span class="font-semibold text-slate-700">Dokumen Palsu</span>
+         </div>
+         <p class="text-sm text-slate-500">Deteni dengan indikasi dokumen tidak valid</p>
+         <p class="text-2xl font-bold text-slate-800 mt-2" id="indicator-fake-docs">0</p>
+        </div>
+        <div class="p-4 bg-slate-50 rounded-xl">
+         <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg><span class="font-semibold text-slate-700">Identitas Ganda</span>
+         </div>
+         <p class="text-sm text-slate-500">Deteni dengan lebih dari satu identitas</p>
+         <p class="text-2xl font-bold text-slate-800 mt-2" id="indicator-multi-id">0</p>
+        </div>
+        <div class="p-4 bg-slate-50 rounded-xl">
+         <div class="flex items-center gap-2 mb-2">
+          <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg><span class="font-semibold text-slate-700">Info Inkonsisten</span>
+         </div>
+         <p class="text-sm text-slate-500">Ketidaksesuaian data/keterangan</p>
+         <p class="text-2xl font-bold text-slate-800 mt-2" id="indicator-inconsistent">0</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Admin Panel View -->
+     <div id="view-admin-panel" class="view-content hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="admin-total-users">3</h3>
+        <p class="text-slate-500 text-sm">Total Pengguna Aktif</p>
+       </div>
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="admin-data-integrity">98</h3>
+        <p class="text-slate-500 text-sm">Integritas Data (%)</p>
+       </div>
+       <div class="stat-card glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex items-center justify-between mb-4">
+         <div class="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center">
+          <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          </svg>
+         </div>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800" id="admin-system-status">Aktif</h3>
+        <p class="text-slate-500 text-sm">Status Sistem</p>
+       </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <div class="glass-card rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+         <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+         </svg> Pengaturan Sistem</h3>
+        <div class="space-y-4">
+         <div>
+          <label class="block text-sm font-medium text-slate-700 mb-2">Judul Sistem</label> <input type="text" id="admin-system-title" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none" value="SIPEKA-DETENI">
+         </div>
+         <div>
+          <label class="block text-sm font-medium text-slate-700 mb-2">Nama Institusi</label> <input type="text" id="admin-institution-name" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none" value="Rumah Detensi Imigrasi Surabaya">
+         </div><button onclick="saveSystemSettings()" class="btn-primary text-white w-full px-4 py-2.5 rounded-lg font-medium transition-all mt-4"> Simpan Pengaturan Sistem </button>
+        </div>
+       </div>
+       <div class="glass-card rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+         <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+         </svg> Tindakan Berbahaya</h3>
+        <div class="space-y-3">
+         <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p class="text-sm text-red-800 font-medium mb-3">Hapus Semua Data</p>
+          <p class="text-xs text-red-700 mb-3">Aksi ini akan menghapus semua data deteni dan catatan harian. Tindakan ini tidak dapat diundur.</p><button onclick="openDeleteAllModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full"> Hapus Semua Data </button>
+         </div>
+         <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <p class="text-sm text-amber-800 font-medium mb-3">Logout &amp; Reset Sistem</p>
+          <p class="text-xs text-amber-700 mb-3">Keluar dari sistem dan kembali ke layar login.</p><button onclick="handleLogout()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full"> Logout </button>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div><!-- Public Preview Modal -->
+  <div id="public-preview-modal" class="fixed inset-0 z-50 hidden bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col">
+   <!-- Preview Header -->
+   <div class="glass-card border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+    <div>
+     <h2 id="preview-title" class="text-2xl font-bold text-slate-800">SIPEKA-DETENI</h2>
+     <p id="preview-institution" class="text-slate-500">Rumah Detensi Imigrasi Surabaya</p>
+    </div><button onclick="closePublicPreview()" class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+     </svg></button>
+   </div><!-- Preview Content -->
+   <div class="flex-1 overflow-auto">
+    <div class="max-w-6xl mx-auto p-8">
+     <!-- Preview Stats -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="glass-card rounded-xl p-6 border border-slate-200 text-center">
+       <h3 class="text-3xl font-bold text-slate-800" id="preview-total">0</h3>
+       <p class="text-slate-500 text-sm mt-1">Total Deteni</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 border border-slate-200 text-center">
+       <h3 class="text-3xl font-bold text-red-600" id="preview-high-risk">0</h3>
+       <p class="text-slate-500 text-sm mt-1">Risiko Tinggi</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 border border-slate-200 text-center">
+       <h3 class="text-3xl font-bold text-amber-600" id="preview-pending">0</h3>
+       <p class="text-slate-500 text-sm mt-1">Proses Deportasi</p>
+      </div>
+      <div class="glass-card rounded-xl p-6 border border-slate-200 text-center">
+       <h3 class="text-3xl font-bold text-green-600" id="preview-deported">0</h3>
+       <p class="text-slate-500 text-sm mt-1">Sudah Dideportasi</p>
+      </div>
+     </div><!-- Preview Detainees Table -->
+     <div class="glass-card rounded-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-slate-50 border-b border-slate-200 px-6 py-4">
+       <h3 class="font-bold text-slate-800">Daftar Deteni</h3>
+      </div>
+      <div class="overflow-x-auto">
+       <table class="w-full">
+        <thead class="bg-slate-100 border-b border-slate-200">
+         <tr>
+          <th class="text-left px-6 py-3 text-xs font-semibold text-slate-600 uppercase">Nama</th>
+          <th class="text-left px-6 py-3 text-xs font-semibold text-slate-600 uppercase">Negara</th>
+          <th class="text-left px-6 py-3 text-xs font-semibold text-slate-600 uppercase">Pelanggaran</th>
+          <th class="text-left px-6 py-3 text-xs font-semibold text-slate-600 uppercase">Risiko</th>
+          <th class="text-left px-6 py-3 text-xs font-semibold text-slate-600 uppercase">Status</th>
+         </tr>
+        </thead>
+        <tbody id="preview-table-body" class="divide-y divide-slate-100">
+         <tr>
+          <td colspan="5" class="px-6 py-8 text-center text-slate-500">Belum ada data deteni</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div><!-- Delete All Confirmation Modal -->
+  <div id="delete-all-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+   <div class="glass-card rounded-2xl w-full max-w-md overflow-hidden">
+    <div class="p-6">
+     <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+     </div>
+     <h3 class="text-xl font-bold text-slate-800 text-center mb-2">Hapus Semua Data?</h3>
+     <p class="text-slate-600 text-center mb-6">Aksi ini akan menghapus SEMUA data deteni dan catatan harian secara permanen. Tindakan ini tidak dapat diundur.</p>
+     <div class="flex justify-center gap-3">
+      <button onclick="closeDeleteAllModal()" class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">Batal</button> <button onclick="confirmDeleteAll()" id="btn-confirm-delete-all" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"> <span id="btn-delete-all-text">Ya, Hapus Semua</span> <span id="btn-delete-all-loading" class="hidden">Menghapus...</span> </button>
+     </div>
+    </div>
+   </div>
+  </div><!-- Detainee Modal -->
+  <div id="detainee-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+   <div class="glass-card rounded-2xl w-full max-w-3xl max-h-[90%] overflow-hidden flex flex-col">
+    <div class="gradient-primary px-6 py-4 flex items-center justify-between">
+     <h3 class="text-white font-bold text-lg" id="detainee-modal-title">Tambah Deteni Baru</h3><button onclick="closeDetaineeModal()" class="text-white/80 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+    </div>
+    <form id="detainee-form" class="p-6 overflow-y-auto flex-1" onsubmit="handleDetaineeSubmit(event)">
+     <input type="hidden" id="edit-detainee-id">
+     <div class="mb-4">
+      <label class="block text-sm font-medium text-slate-700 mb-2">Foto Deteni</label>
+      <div id="photo-preview" class="w-24 h-24 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center cursor-pointer hover:bg-slate-100 transition-colors" onclick="document.getElementById('input-photo').click()">
+       <div class="text-center">
+        <svg class="w-8 h-8 text-slate-400 mx-auto mb-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <p class="text-xs text-slate-500">Upload Foto</p>
+       </div>
+      </div><input type="file" id="input-photo" class="hidden" accept="image/*" onchange="handlePhotoUpload(event)">
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap *</label> <input type="text" id="input-name" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Kewarganegaraan *</label> <select id="input-nationality" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="">Pilih Negara</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Nomor Paspor</label> <input type="text" id="input-passport" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Lahir *</label> <input type="date" id="input-dob" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Jenis Kelamin *</label> <select id="input-gender" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="">Pilih</option> <option value="male">Laki-laki</option> <option value="female">Perempuan</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Masuk *</label> <input type="date" id="input-entry-date" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Jenis Pelanggaran *</label> <select id="input-violation" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="">Pilih Pelanggaran</option> <option value="overstay">Overstay</option> <option value="illegal_entry">Masuk Ilegal</option> <option value="fake_docs">Dokumen Palsu</option> <option value="visa_violation">Pelanggaran Visa</option> <option value="human_trafficking">Perdagangan Manusia</option> <option value="smuggling">Penyelundupan</option> <option value="other">Lainnya</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Tingkat Risiko *</label> <select id="input-risk" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="">Pilih Risiko</option> <option value="high">Tinggi</option> <option value="medium">Sedang</option> <option value="low">Rendah</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Status Deportasi</label> <select id="input-deport-status" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="pending">Menunggu</option> <option value="processing">Diproses</option> <option value="scheduled">Terjadwal</option> <option value="completed">Selesai</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Negara Tujuan Deportasi</label> <select id="input-dest-country" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="">Pilih Negara</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Deportasi</label> <input type="date" id="input-deport-date" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none">
+      </div>
+     </div>
+     <div class="mt-4">
+      <label class="block text-sm font-medium text-slate-700 mb-1">Catatan</label> <textarea id="input-notes" rows="3" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none resize-none"></textarea>
+     </div>
+     <div class="mt-6 flex justify-end gap-3">
+      <button type="button" onclick="closeDetaineeModal()" class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">Batal</button> <button type="submit" id="btn-submit-detainee" class="btn-primary text-white px-6 py-2.5 rounded-lg font-medium transition-all"> <span id="btn-detainee-text">Simpan</span> <span id="btn-detainee-loading" class="hidden">Menyimpan...</span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Daily Note Modal -->
+  <div id="note-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+   <div class="glass-card rounded-2xl w-full max-w-xl overflow-hidden">
+    <div class="gradient-primary px-6 py-4 flex items-center justify-between">
+     <h3 class="text-white font-bold text-lg">Tambah Catatan Harian</h3><button onclick="closeNoteModal()" class="text-white/80 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+    </div>
+    <form id="note-form" class="p-6" onsubmit="handleNoteSubmit(event)">
+     <div class="space-y-4">
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Pilih Deteni *</label> <select id="input-note-detainee" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="">Pilih Deteni</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal *</label> <input type="date" id="input-note-date" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Nama Petugas *</label> <input type="text" id="input-officer-name" required class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none" placeholder="Nama petugas yang bertugas">
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Status Perilaku</label> <select id="input-behavior" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="good">Baik</option> <option value="warning">Perlu Perhatian</option> <option value="problematic">Bermasalah</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Status Kesehatan</label> <select id="input-health" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none"> <option value="healthy">Sehat</option> <option value="sick">Sakit</option> <option value="needs_attention">Perlu Penanganan</option> </select>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-slate-700 mb-1">Catatan Harian *</label> <textarea id="input-note-content" required rows="4" class="input-field w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none resize-none" placeholder="Tuliskan catatan observasi harian..."></textarea>
+      </div>
+     </div>
+     <div class="mt-6 flex justify-end gap-3">
+      <button type="button" onclick="closeNoteModal()" class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">Batal</button> <button type="submit" id="btn-submit-note" class="btn-primary text-white px-6 py-2.5 rounded-lg font-medium transition-all"> <span id="btn-note-text">Simpan</span> <span id="btn-note-loading" class="hidden">Menyimpan...</span> </button>
+     </div>
+    </form>
+   </div>
+  </div><!-- Detail Modal -->
+  <div id="detail-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+   <div class="glass-card rounded-2xl w-full max-w-2xl max-h-[90%] overflow-hidden flex flex-col">
+    <div class="gradient-primary px-6 py-4 flex items-center justify-between">
+     <h3 class="text-white font-bold text-lg">Detail Deteni</h3><button onclick="closeDetailModal()" class="text-white/80 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+    </div>
+    <div id="detail-content" class="p-6 overflow-y-auto flex-1"></div>
+   </div>
+  </div><!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+   <div class="glass-card rounded-2xl w-full max-w-md overflow-hidden">
+    <div class="p-6 text-center">
+     <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+     </div>
+     <h3 class="text-xl font-bold text-slate-800 mb-2">Konfirmasi Hapus</h3>
+     <p class="text-slate-600 mb-6" id="delete-message">Apakah Anda yakin ingin menghapus data ini?</p>
+     <div class="flex justify-center gap-3">
+      <button onclick="closeDeleteModal()" class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">Batal</button> <button onclick="confirmDelete()" id="btn-confirm-delete" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"> <span id="btn-delete-text">Hapus</span> <span id="btn-delete-loading" class="hidden">Menghapus...</span> </button>
+     </div>
+    </div>
+   </div>
+  </div><!-- Logo Upload Modal -->
+  <div id="logo-modal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+   <div class="glass-card rounded-2xl w-full max-w-md overflow-hidden">
+    <div class="gradient-primary px-6 py-4 flex items-center justify-between">
+     <h3 class="text-white font-bold text-lg">Ubah Logo Institusi</h3><button onclick="closeLogoModal()" class="text-white/80 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+    </div>
+    <div class="p-6">
+     <div id="logo-upload-preview" class="w-32 h-32 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-slate-100 transition-colors overflow-hidden" onclick="document.getElementById('logo-input').click()"><img id="logo-preview-img" src="" alt="Logo" class="w-full h-full object-cover hidden">
+      <div id="logo-upload-placeholder" class="text-center">
+       <svg class="w-12 h-12 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+       </svg>
+       <p class="text-sm text-slate-600 font-medium">Klik untuk upload</p>
+      </div>
+     </div><input type="file" id="logo-input" class="hidden" accept="image/*" onchange="handleLogoUpload(event)">
+     <p class="text-xs text-slate-500 text-center mb-4">Format: JPG, PNG, GIF (Rekomendasi 200x200px)</p>
+     <div class="flex justify-end gap-3"><button type="button" onclick="closeLogoModal()" class="px-4 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">Batal</button> <button type="button" onclick="saveLogo()" id="btn-save-logo" class="btn-primary text-white px-4 py-2.5 rounded-lg font-medium transition-all">Simpan</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="toast" class="fixed bottom-4 right-4 z-50 hidden">
+   <div class="glass-card rounded-lg px-6 py-4 shadow-lg border border-slate-200 flex items-center gap-3">
+    <div id="toast-icon"></div>
+    <p id="toast-message" class="text-slate-700 font-medium"></p>
+   </div>
+  </div>
+  <script>
+    // ============================================
+    // AUTOSAVE MODULE
+    // ============================================
+    
+    class AutoSaveManager {
+      constructor() {
+        this.saveDraftKey = 'sipeka_form_drafts';
+        this.autoSaveInterval = 10000; // 10 seconds
+        this.isDirty = false;
+        this.currentFormType = null;
+        this.drafts = JSON.parse(localStorage.getItem(this.saveDraftKey) || '{}');
+      }
+
+      // Initialize autosave listeners
+      initAutoSave() {
+        this.attachFormListeners();
+        this.startAutoSaveTimer();
+      }
+
+      // Attach change listeners to all form inputs
+      attachFormListeners() {
+        const forms = ['detainee-form', 'note-form', 'landing-note-form'];
+        
+        forms.forEach(formId => {
+          const form = document.getElementById(formId);
+          if (form) {
+            const inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+              input.addEventListener('change', () => this.markDirty(formId));
+              input.addEventListener('input', () => this.markDirty(formId));
+            });
+          }
+        });
+      }
+
+      // Mark form as having unsaved changes
+      markDirty(formId) {
+        this.isDirty = true;
+        this.currentFormType = formId;
+        this.showAutoSaveIndicator();
+      }
+
+      // Show autosave indicator
+      showAutoSaveIndicator() {
+        let indicator = document.getElementById('autosave-indicator');
+        if (!indicator) {
+          indicator = document.createElement('div');
+          indicator.id = 'autosave-indicator';
+          indicator.className = 'fixed bottom-4 left-4 z-40 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 flex items-center gap-2 text-sm text-blue-800 shadow-lg';
+          document.body.appendChild(indicator);
+        }
+        
+        indicator.innerHTML = `
+          <svg class="w-4 h-4 text-blue-500 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          <span>Menyimpan draft...</span>
+        `;
+        indicator.classList.remove('hidden');
+      }
+
+      // Show saved indicator
+      showSavedIndicator() {
+        let indicator = document.getElementById('autosave-indicator');
+        if (!indicator) return;
+        
+        indicator.innerHTML = `
+          <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span>Draft tersimpan</span>
+        `;
+        
+        setTimeout(() => {
+          if (indicator && !this.isDirty) {
+            indicator.classList.add('hidden');
+          }
+        }, 2000);
+      }
+
+      // Start autosave timer
+      startAutoSaveTimer() {
+        if (autoSaveTimer) clearInterval(autoSaveTimer);
+        
+        autoSaveTimer = setInterval(() => {
+          if (this.isDirty && this.currentFormType) {
+            this.autoSaveDraft(this.currentFormType);
+          }
+        }, this.autoSaveInterval);
+      }
+
+      // Save form draft
+      autoSaveDraft(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        try {
+          const formData = new FormData(form);
+          const draftKey = formId + '_' + (document.getElementById('edit-detainee-id')?.value || 'new');
+          
+          const draft = {
+            formId: formId,
+            timestamp: new Date().toISOString(),
+            data: {}
+          };
+
+          // Collect all form data
+          for (let [key, value] of formData.entries()) {
+            draft.data[key] = value;
+          }
+
+          // Add photo data if exists
+          if (currentPhotoData && formId === 'detainee-form') {
+            draft.data.photo_base64 = currentPhotoData;
+          }
+
+          // Save draft
+          this.drafts[draftKey] = draft;
+          localStorage.setItem(this.saveDraftKey, JSON.stringify(this.drafts));
+
+          this.isDirty = false;
+          this.showSavedIndicator();
+
+          console.log('[AUTOSAVE]', `Draft saved for ${formId}`);
+          securityManager.logAudit('FORM_AUTOSAVE', {
+            formId: formId,
+            draftKey: draftKey,
+            timestamp: new Date().toISOString()
+          });
+        } catch (error) {
+          console.error('[AUTOSAVE ERROR]', error);
+        }
+      }
+
+      // Restore draft
+      restoreDraft(formId, draftKey) {
+        const draft = this.drafts[draftKey];
+        if (!draft) return false;
+
+        try {
+          const form = document.getElementById(formId);
+          if (!form) return false;
+
+          // Restore all form values
+          for (let [key, value] of Object.entries(draft.data)) {
+            if (key === 'photo_base64') {
+              currentPhotoData = value;
+              const preview = document.getElementById('photo-preview');
+              if (preview && value) {
+                preview.innerHTML = `<img src="${value}" alt="Foto" class="w-full h-full object-cover rounded-lg"/>`;
+              }
+            } else {
+              const input = form.querySelector(`[name="${key}"]`);
+              if (input) {
+                input.value = value;
+              }
+            }
+          }
+
+          console.log('[AUTOSAVE RESTORE]', `Draft restored for ${formId}`);
+          return true;
+        } catch (error) {
+          console.error('[AUTOSAVE RESTORE ERROR]', error);
+          return false;
+        }
+      }
+
+      // Get available drafts
+      getAvailableDrafts(formId) {
+        return Object.entries(this.drafts)
+          .filter(([key]) => key.startsWith(formId))
+          .map(([key, draft]) => ({
+            key,
+            formId: draft.formId,
+            timestamp: draft.timestamp,
+            dataPreview: this.getDataPreview(draft.data)
+          }));
+      }
+
+      // Get data preview for display
+      getDataPreview(data) {
+        let preview = '';
+        if (data.full_name) preview += data.full_name;
+        if (data.detainee_id) preview += ` (${data.detainee_id})`;
+        if (!preview && data['input-name']) preview += data['input-name'];
+        return preview || 'Draft tanpa judul';
+      }
+
+      // Clear draft
+      clearDraft(draftKey) {
+        delete this.drafts[draftKey];
+        localStorage.setItem(this.saveDraftKey, JSON.stringify(this.drafts));
+        console.log('[AUTOSAVE]', `Draft cleared: ${draftKey}`);
+      }
+
+      // Clear all drafts
+      clearAllDrafts() {
+        this.drafts = {};
+        localStorage.setItem(this.saveDraftKey, JSON.stringify(this.drafts));
+      }
+    }
+
+    // Initialize AutoSaveManager
+    const autoSaveManager = new AutoSaveManager();
+    
+    class BackupManager {
+      constructor() {
+        this.backups = JSON.parse(localStorage.getItem('sipeka_backups') || '[]');
+        this.maxBackups = 10;
+        this.backupEncryptionKey = securityManager?.encryptionKey || this.generateRandomKey(32);
+      }
+
+      generateRandomKey(length) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+          result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+      }
+
+      // Create encrypted backup
+      createBackup(data, label) {
+        try {
+          const backupData = {
+            id: 'backup_' + Date.now().toString(36).toUpperCase(),
+            label: label || `Backup ${new Date().toLocaleDateString('id-ID')}`,
+            timestamp: new Date().toISOString(),
+            dataCount: data.length,
+            size: new Blob([JSON.stringify(data)]).size,
+            encrypted: true,
+            version: '1.0'
+          };
+
+          // Encrypt the actual data
+          const encryptedContent = this.encryptBackup(data);
+          backupData.encryptedContent = encryptedContent;
+          backupData.checksum = this.generateChecksum(data);
+
+          // Add to backups array
+          this.backups.unshift(backupData);
+
+          // Keep only recent backups
+          if (this.backups.length > this.maxBackups) {
+            this.backups = this.backups.slice(0, this.maxBackups);
+          }
+
+          // Save to localStorage
+          localStorage.setItem('sipeka_backups', JSON.stringify(this.backups));
+
+          console.log('[BACKUP]', `Backup created: ${backupData.id}`);
+          return { success: true, backupId: backupData.id, ...backupData };
+        } catch (error) {
+          console.error('[BACKUP ERROR]', error);
+          return { success: false, error: error.message };
+        }
+      }
+
+      // Restore backup
+      restoreBackup(backupId) {
+        try {
+          const backup = this.backups.find(b => b.id === backupId);
+          if (!backup) {
+            throw new Error('Backup tidak ditemukan');
+          }
+
+          // Decrypt the data
+          const decryptedData = this.decryptBackup(backup.encryptedContent);
+
+          // Verify checksum
+          const currentChecksum = this.generateChecksum(decryptedData);
+          if (currentChecksum !== backup.checksum) {
+            throw new Error('Integritas data tidak valid - kemungkinan data corrupted');
+          }
+
+          console.log('[BACKUP RESTORE]', `Restored backup: ${backupId}`);
+          return { success: true, data: decryptedData };
+        } catch (error) {
+          console.error('[BACKUP RESTORE ERROR]', error);
+          return { success: false, error: error.message };
+        }
+      }
+
+      // Export backup as encrypted file
+      exportBackup(backupId) {
+        try {
+          const backup = this.backups.find(b => b.id === backupId);
+          if (!backup) throw new Error('Backup tidak ditemukan');
+
+          const exportData = {
+            ...backup,
+            exportedAt: new Date().toISOString(),
+            exportedBy: currentUser,
+            securityLevel: 'encrypted'
+          };
+
+          const dataStr = JSON.stringify(exportData);
+          const dataBlob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+          const url = URL.createObjectURL(dataBlob);
+          
+          // Create download link
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `SIPEKA_Backup_${backupId}_${Date.now()}.secure.json`;
+          link.click();
+          
+          URL.revokeObjectURL(url);
+
+          console.log('[BACKUP EXPORT]', `Exported backup: ${backupId}`);
+          return { success: true };
+        } catch (error) {
+          console.error('[BACKUP EXPORT ERROR]', error);
+          return { success: false, error: error.message };
+        }
+      }
+
+      // Import backup file
+      importBackup(file) {
+        return new Promise((resolve) => {
+          try {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const importedData = JSON.parse(e.target.result);
+              
+              // Validate imported data
+              if (!importedData.id || !importedData.encryptedContent) {
+                throw new Error('Format file backup tidak valid');
+              }
+
+              // Add to backups
+              this.backups.unshift(importedData);
+              if (this.backups.length > this.maxBackups) {
+                this.backups = this.backups.slice(0, this.maxBackups);
+              }
+
+              localStorage.setItem('sipeka_backups', JSON.stringify(this.backups));
+
+              console.log('[BACKUP IMPORT]', `Imported backup: ${importedData.id}`);
+              resolve({ success: true, backupId: importedData.id });
+            };
+            reader.readAsText(file);
+          } catch (error) {
+            console.error('[BACKUP IMPORT ERROR]', error);
+            resolve({ success: false, error: error.message });
+          }
+        });
+      }
+
+      // Delete backup
+      deleteBackup(backupId) {
+        try {
+          this.backups = this.backups.filter(b => b.id !== backupId);
+          localStorage.setItem('sipeka_backups', JSON.stringify(this.backups));
+          console.log('[BACKUP DELETE]', `Deleted backup: ${backupId}`);
+          return { success: true };
+        } catch (error) {
+          console.error('[BACKUP DELETE ERROR]', error);
+          return { success: false, error: error.message };
+        }
+      }
+
+      // Encrypt backup content
+      encryptBackup(data) {
+        try {
+          const jsonStr = JSON.stringify(data);
+          const encoded = btoa(jsonStr);
+          let encrypted = '';
+          for (let i = 0; i < encoded.length; i++) {
+            encrypted += String.fromCharCode(
+              encoded.charCodeAt(i) ^ this.backupEncryptionKey.charCodeAt(i % this.backupEncryptionKey.length)
+            );
+          }
+          return btoa(encrypted);
+        } catch (e) {
+          console.error('Encryption error:', e);
+          return null;
+        }
+      }
+
+      // Decrypt backup content
+      decryptBackup(encryptedData) {
+        try {
+          const decoded = atob(encryptedData);
+          let decrypted = '';
+          for (let i = 0; i < decoded.length; i++) {
+            decrypted += String.fromCharCode(
+              decoded.charCodeAt(i) ^ this.backupEncryptionKey.charCodeAt(i % this.backupEncryptionKey.length)
+            );
+          }
+          return JSON.parse(atob(decrypted));
+        } catch (e) {
+          console.error('Decryption error:', e);
+          return null;
+        }
+      }
+
+      // Generate checksum for data integrity
+      generateChecksum(data) {
+        let hash = 0;
+        const str = JSON.stringify(data);
+        for (let i = 0; i < str.length; i++) {
+          const char = str.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash;
+        }
+        return Math.abs(hash).toString(16);
+      }
+
+      // Get all backups list
+      getBackupsList() {
+        return this.backups.map(b => ({
+          id: b.id,
+          label: b.label,
+          timestamp: b.timestamp,
+          dataCount: b.dataCount,
+          size: b.size,
+          version: b.version
+        }));
+      }
+
+      // Get backup access link (for sharing with encryption key)
+      generateAccessLink(backupId) {
+        const backup = this.backups.find(b => b.id === backupId);
+        if (!backup) return null;
+
+        const accessToken = this.generateRandomKey(16);
+        const linkData = {
+          backupId: backupId,
+          accessToken: accessToken,
+          createdAt: new Date().toISOString(),
+          expiresIn: 7 * 24 * 60 * 60 * 1000 // 7 days
+        };
+
+        // Store access token
+        const accessLinks = JSON.parse(localStorage.getItem('sipeka_access_links') || '{}');
+        accessLinks[accessToken] = linkData;
+        localStorage.setItem('sipeka_access_links', JSON.stringify(accessLinks));
+
+        return {
+          token: accessToken,
+          backupId: backupId,
+          expiresAt: new Date(Date.now() + linkData.expiresIn).toISOString(),
+          accessUrl: `${window.location.origin}?backup_token=${accessToken}`
+        };
+      }
+
+      // Verify access token
+      verifyAccessToken(token) {
+        const accessLinks = JSON.parse(localStorage.getItem('sipeka_access_links') || '{}');
+        const linkData = accessLinks[token];
+
+        if (!linkData) return null;
+
+        // Check expiration
+        if (new Date() > new Date(linkData.expiresAt)) {
+          delete accessLinks[token];
+          localStorage.setItem('sipeka_access_links', JSON.stringify(accessLinks));
+          return null;
+        }
+
+        return linkData;
+      }
+    }
+
+    // ============================================
+    // SECURITY & ENCRYPTION MODULE
+    // ============================================
+    
+    class SecurityManager {
+      constructor() {
+        this.encryptionKey = this.getOrCreateEncryptionKey();
+        this.auditLog = [];
+        this.sessionToken = this.generateSessionToken();
+        this.sessionStartTime = Date.now();
+        this.sessionTimeout = 30 * 60 * 1000; // 30 minutes
+        this.lastActivityTime = Date.now();
+      }
+
+      // Generate or retrieve encryption key from secure storage
+      getOrCreateEncryptionKey() {
+        let key = sessionStorage.getItem('sipeka_enc_key');
+        if (!key) {
+          key = this.generateRandomKey(32);
+          sessionStorage.setItem('sipeka_enc_key', key);
+        }
+        return key;
+      }
+
+      // Generate random key
+      generateRandomKey(length) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+          result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+      }
+
+      // Generate session token
+      generateSessionToken() {
+        return 'token_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+      }
+
+      // Simple encryption using XOR (for demo - in production use proper crypto)
+      encrypt(data) {
+        try {
+          const jsonStr = JSON.stringify(data);
+          const encoded = btoa(jsonStr); // Base64 encode
+          let encrypted = '';
+          for (let i = 0; i < encoded.length; i++) {
+            encrypted += String.fromCharCode(
+              encoded.charCodeAt(i) ^ this.encryptionKey.charCodeAt(i % this.encryptionKey.length)
+            );
+          }
+          return btoa(encrypted); // Double encode for safety
+        } catch (e) {
+          console.error('Encryption error:', e);
+          return null;
+        }
+      }
+
+      // Decrypt data
+      decrypt(encryptedData) {
+        try {
+          const decoded = atob(encryptedData);
+          let decrypted = '';
+          for (let i = 0; i < decoded.length; i++) {
+            decrypted += String.fromCharCode(
+              decoded.charCodeAt(i) ^ this.encryptionKey.charCodeAt(i % this.encryptionKey.length)
+            );
+          }
+          return JSON.parse(atob(decrypted));
+        } catch (e) {
+          console.error('Decryption error:', e);
+          return null;
+        }
+      }
+
+      // Hash password (simple hash for demo)
+      hashPassword(password) {
+        let hash = 0;
+        for (let i = 0; i < password.length; i++) {
+          const char = password.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // Convert to 32bit integer
+        }
+        return 'hash_' + Math.abs(hash).toString(36);
+      }
+
+      // Validate session
+      isSessionValid() {
+        const timeSinceStart = Date.now() - this.sessionStartTime;
+        const timeSinceActivity = Date.now() - this.lastActivityTime;
+        return timeSinceStart < this.sessionTimeout && timeSinceActivity < this.sessionTimeout;
+      }
+
+      // Update last activity
+      updateActivity() {
+        this.lastActivityTime = Date.now();
+      }
+
+      // Log audit event
+      logAudit(event, details) {
+        const auditEntry = {
+          timestamp: new Date().toISOString(),
+          event: event,
+          user: currentUser,
+          details: details,
+          sessionToken: this.sessionToken
+        };
+        this.auditLog.push(auditEntry);
+        
+        // Keep only last 1000 entries
+        if (this.auditLog.length > 1000) {
+          this.auditLog.shift();
+        }
+
+        console.log('[AUDIT]', auditEntry);
+      }
+
+      // Get audit log
+      getAuditLog() {
+        return this.auditLog;
+      }
+
+      // Lock session
+      lockSession() {
+        sessionStorage.clear();
+        localStorage.removeItem('sipeka-mode');
+        this.sessionToken = null;
+      }
+
+      // Generate secure random ID
+      generateSecureId(prefix = '') {
+        const timestamp = Date.now().toString(36);
+        const randomPart = Math.random().toString(36).substr(2, 9);
+        return prefix + '_' + timestamp + '_' + randomPart;
+      }
+    }
+
+    // Initialize Security Manager
+    const securityManager = new SecurityManager();
+
+    // Initialize Backup Manager
+    const backupManager = new BackupManager();
+
+    // Monitor user activity
+    document.addEventListener('mousemove', () => securityManager.updateActivity());
+    document.addEventListener('keypress', () => securityManager.updateActivity());
+    document.addEventListener('click', () => securityManager.updateActivity());
+
+    // Check session validity periodically
+    setInterval(() => {
+      if (isLoggedIn && !securityManager.isSessionValid()) {
+        handleSessionExpired();
+      }
+    }, 60000); // Check every minute
+
+    function handleSessionExpired() {
+      showToast('Sesi Anda telah berakhir. Silakan login kembali.', 'error');
+      handleLogout();
+    }
+
+    // ============================================
+    // DATA PROTECTION UTILITIES
+    // ============================================
+
+    function encryptSensitiveData(data, fields) {
+      const encrypted = { ...data };
+      fields.forEach(field => {
+        if (encrypted[field]) {
+          encrypted[field] = securityManager.encrypt(encrypted[field]);
+        }
+      });
+      return encrypted;
+    }
+
+    function decryptSensitiveData(data, fields) {
+      const decrypted = { ...data };
+      fields.forEach(field => {
+        if (decrypted[field] && typeof decrypted[field] === 'string' && decrypted[field].startsWith('U2F')) {
+          const decryptedValue = securityManager.decrypt(decrypted[field]);
+          if (decryptedValue !== null) {
+            decrypted[field] = decryptedValue;
+          }
+        }
+      });
+      return decrypted;
+    }
+
+    // ============================================
+    // Mode Management
+    // ============================================
+    let currentMode = 'desktop';
+
+    function selectMode(mode) {
+      currentMode = mode;
+      const modeDropdown = document.getElementById('mode-selector-dropdown');
+      const modeToggleBtn = document.getElementById('mode-toggle-btn');
+      const modeLabel = document.getElementById('mode-label');
+      const modeIcon = document.getElementById('mode-icon');
+      const html = document.documentElement;
+      
+      // Hide dropdown
+      modeDropdown.classList.add('hidden');
+      
+      // Update label and icon
+      if (mode === 'mobile') {
+        modeLabel.textContent = 'Mobile';
+        modeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />';
+        html.style.fontSize = '14px';
+      } else {
+        modeLabel.textContent = 'Desktop';
+        modeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0v3m6-13h3.75m0 0l.75-3M15 8h4m0 0v3m0-3l.75 3M15 8l-.75-3" />';
+        html.style.fontSize = '16px';
+      }
+
+      // Store preference
+      localStorage.setItem('sipeka-mode', mode);
+    }
+
+    function toggleModeSelectorDropdown() {
+      const modeDropdown = document.getElementById('mode-selector-dropdown');
+      modeDropdown.classList.toggle('hidden');
+    }
+
+    function initModeSelector() {
+      const savedMode = localStorage.getItem('sipeka-mode') || 'desktop';
+      // Auto-select saved mode
+      selectMode(savedMode);
+    }
+
+    // Initialize mode selector when page loads
+    window.addEventListener('load', initModeSelector);
+
+    // Close mode selector dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const modeDropdown = document.getElementById('mode-selector-dropdown');
+      const modeToggleBtn = document.getElementById('mode-toggle-btn');
+      
+      if (!modeDropdown.classList.contains('hidden') &&
+          !modeDropdown.contains(e.target) &&
+          !modeToggleBtn.contains(e.target)) {
+        modeDropdown.classList.add('hidden');
+      }
+    });
+    // Country list
+    const countries = [
+      "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua dan Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+      "Azerbaijan", "Bahama", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgia", "Belize", "Benin", "Bhutan",
+      "Bolivia", "Bosnia dan Herzegovina", "Botswana", "Brasil", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Kamboja",
+      "Kamerun", "Kanada", "Republik Afrika Tengah", "Chad", "Chili", "Tiongkok", "Kolombia", "Komoro", "Kongo", "Kosta Rika",
+      "Kroasia", "Kuba", "Siprus", "Ceko", "Denmark", "Djibouti", "Dominika", "Republik Dominika", "Ekuador", "Mesir",
+      "El Salvador", "Guinea Khatulistiwa", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finlandia", "Prancis", "Gabon",
+      "Gambia", "Georgia", "Jerman", "Ghana", "Yunani", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+      "Haiti", "Honduras", "Hongaria", "Islandia", "India", "Indonesia", "Iran", "Irak", "Irlandia", "Israel",
+      "Italia", "Jamaika", "Jepang", "Yordania", "Kazakhstan", "Kenya", "Kiribati", "Korea Utara", "Korea Selatan", "Kuwait",
+      "Kirgistan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luksemburg",
+      "Madagaskar", "Malawi", "Malaysia", "Maladewa", "Mali", "Malta", "Kepulauan Marshall", "Mauritania", "Mauritius", "Meksiko",
+      "Mikronesia", "Moldova", "Monako", "Mongolia", "Montenegro", "Maroko", "Mozambik", "Myanmar", "Namibia", "Nauru",
+      "Nepal", "Belanda", "Selandia Baru", "Nikaragua", "Niger", "Nigeria", "Makedonia Utara", "Norwegia", "Oman", "Pakistan",
+      "Palau", "Palestina", "Panama", "Papua Nugini", "Paraguay", "Peru", "Filipina", "Polandia", "Portugal", "Qatar",
+      "Rumania", "Rusia", "Rwanda", "Saint Kitts dan Nevis", "Saint Lucia", "Saint Vincent dan Grenadines", "Samoa", "San Marino", "Sao Tome dan Principe", "Arab Saudi",
+      "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapura", "Slovakia", "Slovenia", "Kepulauan Solomon", "Somalia", "Afrika Selatan",
+      "Sudan Selatan", "Spanyol", "Sri Lanka", "Sudan", "Suriname", "Swedia", "Swiss", "Suriah", "Taiwan", "Tajikistan",
+      "Tanzania", "Thailand", "Timor Leste", "Togo", "Tonga", "Trinidad dan Tobago", "Tunisia", "Turki", "Turkmenistan", "Tuvalu",
+      "Uganda", "Ukraina", "Uni Emirat Arab", "Inggris", "Amerika Serikat", "Uruguay", "Uzbekistan", "Vanuatu", "Vatikan", "Venezuela",
+      "Vietnam", "Yaman", "Zambia", "Zimbabwe"
+    ];
+
+    // State
+    let allData = [];
+    let detainees = [];
+    let dailyNotes = [];
+    let currentView = 'dashboard';
+    let deleteTarget = null;
+    let recordCount = 0;
+    let currentPhotoData = null;
+    let currentLogoData = null;
+    let isLoggedIn = false;
+    let currentUser = null;
+    let autoSaveTimer = null;
+    let draftData = {};
+
+    // Demo credentials
+    const validCredentials = {
+      'rudenimsby': 'rudenimsipeka123',
+      'petugas': 'petugas123',
+      'supervisor': 'supervisor123',
+      'admin': 'admin123'
+    };
+
+    const userRoles = {
+      'rudenimsby': 'admin',
+      'petugas': 'officer',
+      'supervisor': 'supervisor',
+      'admin': 'admin'
+    };
+
+    const defaultConfig = {
+      system_title: 'SIPEKA-DETENI',
+      institution_name: 'Rumah Detensi Imigrasi Surabaya'
+    };
+
+    // Initialize SDKs
+    async function initApp() {
+      // Check if already logged in
+      if (!isLoggedIn) {
+        return;
+      }
+
+      // Set current date
+      document.getElementById('current-date').textContent = new Date().toLocaleDateString('id-ID', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+
+      // Populate country selects
+      populateCountrySelects();
+
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('system-title').textContent = config.system_title || defaultConfig.system_title;
+            document.getElementById('institution-name').textContent = config.institution_name || defaultConfig.institution_name;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ['system_title', config.system_title || defaultConfig.system_title],
+            ['institution_name', config.institution_name || defaultConfig.institution_name]
+          ])
+        });
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init({
+          onDataChanged: (data) => {
+            allData = data;
+            recordCount = data.length;
+            processData(data);
+            updateUI();
+          }
+        });
+
+        if (!result.isOk) {
+          showToast('Gagal menginisialisasi database', 'error');
+        }
+      }
+    }
+
+    function populateCountrySelects() {
+      const selects = ['input-nationality', 'input-dest-country', 'filter-nationality'];
+      selects.forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+          const existingOptions = select.innerHTML;
+          countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            select.appendChild(option);
+          });
+        }
+      });
+    }
+
+    function processData(data) {
+      detainees = data.filter(item => item.type === 'detainee');
+      dailyNotes = data.filter(item => item.type === 'daily_note');
+      
+      // Update detainee selects
+      const detaineeSelects = ['input-note-detainee', 'filter-note-detainee'];
+      detaineeSelects.forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+          const firstOption = select.querySelector('option');
+          select.innerHTML = '';
+          select.appendChild(firstOption);
+          detainees.forEach(d => {
+            const option = document.createElement('option');
+            option.value = d.detainee_id;
+            option.textContent = `${d.detainee_id} - ${d.full_name}`;
+            select.appendChild(option);
+          });
+        }
+      });
+    }
+
+    function updateUI() {
+      updateStats();
+      updateDashboard();
+      updateDetaineesTable();
+      updateDailyNotesList();
+      updateDeportationView();
+      updateRiskAssessment();
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = detainees.length;
+      document.getElementById('stat-high-risk').textContent = detainees.filter(d => d.risk_level === 'high').length;
+      document.getElementById('stat-pending').textContent = detainees.filter(d => d.deportation_status !== 'completed').length;
+      document.getElementById('stat-deported').textContent = detainees.filter(d => d.deportation_status === 'completed').length;
+    }
+
+    function updateDashboard() {
+      // Recent detainees
+      const recentContainer = document.getElementById('recent-detainees');
+      const recentDetainees = [...detainees].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+      
+      if (recentDetainees.length === 0) {
+        recentContainer.innerHTML = '<p class="text-slate-500 text-sm text-center py-4">Belum ada data deteni</p>';
+      } else {
+        recentContainer.innerHTML = recentDetainees.map(d => `
+          <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+            <div class="w-10 h-10 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
+              <span class="text-white font-bold text-xs">${d.full_name.substring(0, 2).toUpperCase()}</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-slate-800 text-sm truncate">${d.full_name}</p>
+              <p class="text-xs text-slate-500">${d.nationality} • ${d.detainee_id}</p>
+            </div>
+            <span class="status-pill ${getRiskClass(d.risk_level)}">${getRiskLabel(d.risk_level)}</span>
+          </div>
+        `).join('');
+      }
+
+      // Recent notes
+      const notesContainer = document.getElementById('recent-notes');
+      const recentNotes = [...dailyNotes].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+      
+      if (recentNotes.length === 0) {
+        notesContainer.innerHTML = '<p class="text-slate-500 text-sm text-center py-4">Belum ada catatan harian</p>';
+      } else {
+        notesContainer.innerHTML = recentNotes.map(n => {
+          const detainee = detainees.find(d => d.detainee_id === n.detainee_id);
+          return `
+            <div class="p-3 bg-slate-50 rounded-lg">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-medium text-slate-800 text-sm">${detainee ? detainee.full_name : n.detainee_id}</span>
+                <span class="text-xs text-slate-500">${formatDate(n.daily_note_date)}</span>
+              </div>
+              <p class="text-sm text-slate-600 line-clamp-2">${n.daily_note_content}</p>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function updateDetaineesTable() {
+      const tbody = document.getElementById('detainees-table');
+      const filterNationality = document.getElementById('filter-nationality').value;
+      const filterRisk = document.getElementById('filter-risk').value;
+      const searchQuery = document.getElementById('global-search').value.toLowerCase();
+
+      let filtered = detainees;
+      
+      if (filterNationality) {
+        filtered = filtered.filter(d => d.nationality === filterNationality);
+      }
+      if (filterRisk) {
+        filtered = filtered.filter(d => d.risk_level === filterRisk);
+      }
+      if (searchQuery) {
+        filtered = filtered.filter(d => 
+          d.full_name.toLowerCase().includes(searchQuery) ||
+          d.detainee_id.toLowerCase().includes(searchQuery) ||
+          d.nationality.toLowerCase().includes(searchQuery)
+        );
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">Tidak ada data ditemukan</td></tr>';
+      } else {
+        tbody.innerHTML = filtered.map(d => `
+          <tr class="table-row">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ${d.photo_base64 ? '' : 'gradient-primary flex items-center justify-center'}">
+                  ${d.photo_base64 ? `<img src="${d.photo_base64}" alt="${d.full_name}" class="w-full h-full object-cover"/>` : `<span class="text-white font-bold text-xs">${d.full_name.substring(0, 2).toUpperCase()}</span>`}
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800">${d.full_name}</p>
+                  <p class="text-sm text-slate-500">${d.detainee_id}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span class="text-slate-700">${d.nationality}</span>
+            </td>
+            <td class="px-6 py-4">
+              <span class="text-slate-700">${getViolationLabel(d.violation_type)}</span>
+            </td>
+            <td class="px-6 py-4">
+              <span class="status-pill ${getRiskClass(d.risk_level)}">${getRiskLabel(d.risk_level)}</span>
+            </td>
+            <td class="px-6 py-4">
+              <span class="status-pill ${getStatusClass(d.deportation_status)}">${getStatusLabel(d.deportation_status)}</span>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2">
+                <button onclick="viewDetailModal('${d.__backendId}')" class="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Lihat Detail">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </button>
+                <button onclick="editDetainee('${d.__backendId}')" class="p-2 text-slate-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors" title="Edit">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </button>
+                <button onclick="openDeleteModal('detainee', '${d.__backendId}')" class="p-2 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Hapus">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function updateDailyNotesList() {
+      const container = document.getElementById('daily-notes-list');
+      const filterDetainee = document.getElementById('filter-note-detainee').value;
+      const filterDate = document.getElementById('filter-note-date').value;
+
+      let filtered = dailyNotes;
+      
+      if (filterDetainee) {
+        filtered = filtered.filter(n => n.detainee_id === filterDetainee);
+      }
+      if (filterDate) {
+        filtered = filtered.filter(n => n.daily_note_date === filterDate);
+      }
+
+      filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="glass-card rounded-2xl border border-slate-200 p-6 text-center"><p class="text-slate-500">Tidak ada catatan ditemukan</p></div>';
+      } else {
+        container.innerHTML = filtered.map(n => {
+          const detainee = detainees.find(d => d.detainee_id === n.detainee_id);
+          return `
+            <div class="glass-card rounded-2xl border border-slate-200 p-6">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-full gradient-primary flex items-center justify-center">
+                    <span class="text-white font-bold">${detainee ? detainee.full_name.substring(0, 2).toUpperCase() : 'NA'}</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-800">${detainee ? detainee.full_name : n.detainee_id}</h4>
+                    <p class="text-sm text-slate-500">${detainee ? detainee.nationality : '-'} • ${n.detainee_id}</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="text-sm font-medium text-slate-700">${formatDate(n.daily_note_date)}</p>
+                  <p class="text-xs text-slate-500">Petugas: ${n.officer_name}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <span class="status-pill ${getBehaviorClass(n.behavior_status)}">${getBehaviorLabel(n.behavior_status)}</span>
+                <span class="status-pill ${getHealthClass(n.health_status)}">${getHealthLabel(n.health_status)}</span>
+              </div>
+              <p class="text-slate-700 bg-slate-50 rounded-lg p-4">${n.daily_note_content}</p>
+              <div class="mt-4 flex justify-end">
+                <button onclick="openDeleteModal('note', '${n.__backendId}')" class="text-red-600 hover:text-red-700 text-sm font-medium flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  Hapus
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function updateDeportationView() {
+      const pipelines = {
+        pending: document.getElementById('pipeline-pending'),
+        processing: document.getElementById('pipeline-processing'),
+        scheduled: document.getElementById('pipeline-scheduled'),
+        completed: document.getElementById('pipeline-completed')
+      };
+
+      Object.keys(pipelines).forEach(status => {
+        const pipeline = pipelines[status];
+        const items = detainees.filter(d => d.deportation_status === status);
+        
+        if (items.length === 0) {
+          pipeline.innerHTML = '<p class="text-xs text-slate-400 text-center py-2">Kosong</p>';
+        } else {
+          pipeline.innerHTML = items.map(d => `
+            <div class="bg-white rounded-lg p-2 border border-slate-200 shadow-sm">
+              <p class="font-medium text-xs text-slate-800 truncate">${d.full_name}</p>
+              <p class="text-xs text-slate-500">${d.nationality}</p>
+            </div>
+          `).join('');
+        }
+      });
+
+      // Update deportation table
+      const tbody = document.getElementById('deportation-table');
+      const filterStatus = document.getElementById('filter-deport-status').value;
+      
+      let filtered = detainees;
+      if (filterStatus) {
+        filtered = filtered.filter(d => d.deportation_status === filterStatus);
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">Tidak ada data deportasi</td></tr>';
+      } else {
+        tbody.innerHTML = filtered.map(d => `
+          <tr class="table-row">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
+                  <span class="text-white font-bold text-xs">${d.full_name.substring(0, 2).toUpperCase()}</span>
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800">${d.full_name}</p>
+                  <p class="text-sm text-slate-500">${d.detainee_id}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-slate-700">${d.destination_country || d.nationality}</td>
+            <td class="px-6 py-4 text-slate-700">${d.deportation_date ? formatDate(d.deportation_date) : '-'}</td>
+            <td class="px-6 py-4">
+              <span class="status-pill ${getStatusClass(d.deportation_status)}">${getStatusLabel(d.deportation_status)}</span>
+            </td>
+            <td class="px-6 py-4">
+              <button onclick="updateDeportationStatus('${d.__backendId}')" class="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                Update Status
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function updateRiskAssessment() {
+      const highRiskList = document.getElementById('risk-high-list');
+      const mediumRiskList = document.getElementById('risk-medium-list');
+      const lowRiskList = document.getElementById('risk-low-list');
+
+      const highRisk = detainees.filter(d => d.risk_level === 'high');
+      const mediumRisk = detainees.filter(d => d.risk_level === 'medium');
+      const lowRisk = detainees.filter(d => d.risk_level === 'low');
+
+      highRiskList.innerHTML = highRisk.length === 0 ? '<p class="text-sm text-slate-500">Tidak ada</p>' :
+        highRisk.map(d => `
+          <div class="flex items-center gap-2 p-2 bg-red-50 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            <span class="text-sm font-medium text-red-800">${d.full_name}</span>
+          </div>
+        `).join('');
+
+      mediumRiskList.innerHTML = mediumRisk.length === 0 ? '<p class="text-sm text-slate-500">Tidak ada</p>' :
+        mediumRisk.map(d => `
+          <div class="flex items-center gap-2 p-2 bg-amber-50 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span class="text-sm font-medium text-amber-800">${d.full_name}</span>
+          </div>
+        `).join('');
+
+      lowRiskList.innerHTML = lowRisk.length === 0 ? '<p class="text-sm text-slate-500">Tidak ada</p>' :
+        lowRisk.map(d => `
+          <div class="flex items-center gap-2 p-2 bg-green-50 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            <span class="text-sm font-medium text-green-800">${d.full_name}</span>
+          </div>
+        `).join('');
+
+      // Update manipulation indicators
+      document.getElementById('indicator-fake-docs').textContent = detainees.filter(d => d.violation_type === 'fake_docs').length;
+      document.getElementById('indicator-multi-id').textContent = 0; // Would need additional data structure
+      document.getElementById('indicator-inconsistent').textContent = detainees.filter(d => d.risk_level === 'high').length;
+    }
+     function setActiveView(view) {
+      currentView = view;
+      
+      // Update sidebar
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.view === view) {
+          item.classList.add('active');
+        }
+      });
+
+      // Update page title
+      const titles = {
+        'dashboard': 'Dashboard',
+        'detainees': 'Data Deteni',
+        'daily-notes': 'Catatan Harian',
+        'deportation': 'Tracking Deportasi',
+        'risk-assessment': 'Mitigasi Risiko'
+      };
+      document.getElementById('page-title').textContent = titles[view] || 'Dashboard';
+
+      // Show/hide views
+      document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
+      document.getElementById(`view-${view}`).classList.remove('hidden');
+    }
+
+    // Update landing recent notes
+    function updateLandingRecentNotes() {
+      const container = document.getElementById('landing-recent-notes');
+      const recentNotes = [...dailyNotes].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
+      
+      if (recentNotes.length === 0) {
+        container.innerHTML = '<p class="text-slate-500 text-sm text-center py-4">Belum ada catatan harian</p>';
+      } else {
+        container.innerHTML = recentNotes.map(n => {
+          const detainee = detainees.find(d => d.detainee_id === n.detainee_id);
+          return `
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-slate-800">${detainee ? detainee.full_name : n.detainee_id}</span>
+                <span class="text-xs text-slate-500">${formatDate(n.daily_note_date)}</span>
+              </div>
+              <p class="text-sm text-slate-600">${n.daily_note_content}</p>
+              <p class="text-xs text-slate-400 mt-2">Oleh: ${n.officer_name}</p>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // Modal Functions
+    function openDetaineeModal() {
+      if (recordCount >= 999) {
+        showToast('Batas maksimal 999 data tercapai. Hapus data lama terlebih dahulu.', 'error');
+        return;
+      }
+      document.getElementById('detainee-modal-title').textContent = 'Tambah Deteni Baru';
+      document.getElementById('detainee-form').reset();
+      document.getElementById('edit-detainee-id').value = '';
+      currentPhotoData = null;
+      resetPhotoPreview();
+      
+      // Check for existing draft
+      const drafts = autoSaveManager.getAvailableDrafts('detainee-form');
+      if (drafts.length > 0 && drafts.some(d => d.key.endsWith('_new'))) {
+        showDraftRestorePrompt('detainee-form', drafts.find(d => d.key.endsWith('_new')).key);
+      }
+      
+      document.getElementById('detainee-modal').classList.remove('hidden');
+      autoSaveManager.initAutoSave();
+    }
+
+    function closeDetaineeModal() {
+      document.getElementById('detainee-modal').classList.add('hidden');
+    }
+
+    function openNoteModal() {
+      if (recordCount >= 999) {
+        showToast('Batas maksimal 999 data tercapai. Hapus data lama terlebih dahulu.', 'error');
+        return;
+      }
+      if (detainees.length === 0) {
+        showToast('Tambahkan deteni terlebih dahulu', 'error');
+        return;
+      }
+      document.getElementById('note-form').reset();
+      document.getElementById('input-note-date').value = new Date().toISOString().split('T')[0];
+      
+      // Check for existing draft
+      const drafts = autoSaveManager.getAvailableDrafts('note-form');
+      if (drafts.length > 0 && drafts.some(d => d.key.endsWith('_new'))) {
+        showDraftRestorePrompt('note-form', drafts.find(d => d.key.endsWith('_new')).key);
+      }
+      
+      document.getElementById('note-modal').classList.remove('hidden');
+      autoSaveManager.initAutoSave();
+    }
+
+    function closeNoteModal() {
+      document.getElementById('note-modal').classList.add('hidden');
+    }
+
+    function viewDetailModal(backendId) {
+      const detainee = allData.find(d => d.__backendId === backendId);
+      if (!detainee) return;
+
+      const notes = dailyNotes.filter(n => n.detainee_id === detainee.detainee_id);
+      
+      document.getElementById('detail-content').innerHTML = `
+        <div class="space-y-6">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 ${detainee.photo_base64 ? '' : 'gradient-primary flex items-center justify-center'}">
+              ${detainee.photo_base64 ? `<img src="${detainee.photo_base64}" alt="${detainee.full_name}" class="w-full h-full object-cover"/>` : `<span class="text-white font-bold text-xl">${detainee.full_name.substring(0, 2).toUpperCase()}</span>`}
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-slate-800">${detainee.full_name}</h3>
+              <p class="text-slate-500">${detainee.detainee_id}</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-slate-50 rounded-lg p-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Kewarganegaraan</p>
+              <p class="font-medium text-slate-800">${detainee.nationality}</p>
+            </div>
+            <div class="bg-slate-50 rounded-lg p-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Nomor Paspor</p>
+              <p class="font-medium text-slate-800">${detainee.passport_number || '-'}</p>
+            </div>
+            <div class="bg-slate-50 rounded-lg p-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Tanggal Lahir</p>
+              <p class="font-medium text-slate-800">${formatDate(detainee.date_of_birth)}</p>
+            </div>
+            <div class="bg-slate-50 rounded-lg p-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Jenis Kelamin</p>
+              <p class="font-medium text-slate-800">${detainee.gender === 'male' ? 'Laki-laki' : 'Perempuan'}</p>
+            </div>
+            <div class="bg-slate-50 rounded-lg p-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Tanggal Masuk</p>
+              <p class="font-medium text-slate-800">${formatDate(detainee.entry_date)}</p>
+            </div>
+            <div class="bg-slate-50 rounded-lg p-4">
+              <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Jenis Pelanggaran</p>
+              <p class="font-medium text-slate-800">${getViolationLabel(detainee.violation_type)}</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <span class="status-pill ${getRiskClass(detainee.risk_level)}">${getRiskLabel(detainee.risk_level)}</span>
+            <span class="status-pill ${getStatusClass(detainee.deportation_status)}">${getStatusLabel(detainee.deportation_status)}</span>
+          </div>
+          
+          ${detainee.notes ? `<div class="bg-amber-50 border border-amber-200 rounded-lg p-4"><p class="text-sm text-amber-800">${detainee.notes}</p></div>` : ''}
+          
+          <div>
+            <h4 class="font-bold text-slate-800 mb-3">Catatan Harian Terbaru</h4>
+            ${notes.length === 0 ? '<p class="text-slate-500 text-sm">Belum ada catatan</p>' :
+              notes.slice(0, 3).map(n => `
+                <div class="bg-slate-50 rounded-lg p-4 mb-2">
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-slate-700">${formatDate(n.daily_note_date)}</span>
+                    <span class="text-xs text-slate-500">${n.officer_name}</span>
+                  </div>
+                  <p class="text-sm text-slate-600">${n.daily_note_content}</p>
+                </div>
+              `).join('')
+            }
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('detail-modal').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detail-modal').classList.add('hidden');
+    }
+
+    function openDeleteModal(type, id) {
+      deleteTarget = { type, id };
+      document.getElementById('delete-message').textContent = 
+        type === 'detainee' ? 'Apakah Anda yakin ingin menghapus data deteni ini?' : 'Apakah Anda yakin ingin menghapus catatan ini?';
+      document.getElementById('delete-modal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      deleteTarget = null;
+      document.getElementById('delete-modal').classList.add('hidden');
+    }
+
+    // Form Handlers
+    async function handleDetaineeSubmit(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('btn-submit-detainee');
+      const btnText = document.getElementById('btn-detainee-text');
+      const btnLoading = document.getElementById('btn-detainee-loading');
+      
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      const editId = document.getElementById('edit-detainee-id').value;
+      const detaineeId = editId ? allData.find(d => d.__backendId === editId)?.detainee_id : securityManager.generateSecureId('DET');
+
+      const data = {
+        type: 'detainee',
+        detainee_id: detaineeId,
+        full_name: document.getElementById('input-name').value,
+        nationality: document.getElementById('input-nationality').value,
+        passport_number: document.getElementById('input-passport').value,
+        date_of_birth: document.getElementById('input-dob').value,
+        gender: document.getElementById('input-gender').value,
+        entry_date: document.getElementById('input-entry-date').value,
+        violation_type: document.getElementById('input-violation').value,
+        risk_level: document.getElementById('input-risk').value,
+        deportation_status: document.getElementById('input-deport-status').value,
+        destination_country: document.getElementById('input-dest-country').value,
+        deportation_date: document.getElementById('input-deport-date').value,
+        photo_base64: currentPhotoData || '',
+        notes: document.getElementById('input-notes').value,
+        created_at: editId ? allData.find(d => d.__backendId === editId)?.created_at : new Date().toISOString()
+      };
+
+      // Log data operation
+      securityManager.logAudit(editId ? 'DETAINEE_UPDATE' : 'DETAINEE_CREATE', {
+        detaineeId: detaineeId,
+        action: editId ? 'update' : 'create',
+        timestamp: new Date().toISOString()
+      });
+
+      let result;
+      if (editId) {
+        const existing = allData.find(d => d.__backendId === editId);
+        result = await window.dataSdk.update({ ...existing, ...data });
+      } else {
+        result = await window.dataSdk.create(data);
+      }
+
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+
+      if (result.isOk) {
+        closeDetaineeModal();
+        securityManager.logAudit(editId ? 'DETAINEE_UPDATE_SUCCESS' : 'DETAINEE_CREATE_SUCCESS', {
+          detaineeId: detaineeId
+        });
+        showToast(editId ? 'Data deteni berhasil diperbarui' : 'Deteni baru berhasil ditambahkan', 'success');
+      } else {
+        securityManager.logAudit('DETAINEE_SAVE_ERROR', {
+          detaineeId: detaineeId,
+          error: result.error.message
+        });
+        showToast('Gagal menyimpan data: ' + result.error.message, 'error');
+      }
+    }
+
+    async function handleNoteSubmit(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('btn-submit-note');
+      const btnText = document.getElementById('btn-note-text');
+      const btnLoading = document.getElementById('btn-note-loading');
+      
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      const data = {
+        type: 'daily_note',
+        id: `NOTE-${Date.now().toString(36).toUpperCase()}`,
+        detainee_id: document.getElementById('input-note-detainee').value,
+        daily_note_date: document.getElementById('input-note-date').value,
+        officer_name: document.getElementById('input-officer-name').value,
+        behavior_status: document.getElementById('input-behavior').value,
+        health_status: document.getElementById('input-health').value,
+        daily_note_content: document.getElementById('input-note-content').value,
+        created_at: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(data);
+
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+
+      if (result.isOk) {
+        closeNoteModal();
+        showToast('Catatan harian berhasil ditambahkan', 'success');
+      } else {
+        showToast('Gagal menyimpan catatan: ' + result.error.message, 'error');
+      }
+    }
+
+    async function confirmDelete() {
+      if (!deleteTarget) return;
+
+      const btn = document.getElementById('btn-confirm-delete');
+      const btnText = document.getElementById('btn-delete-text');
+      const btnLoading = document.getElementById('btn-delete-loading');
+      
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      const record = allData.find(d => d.__backendId === deleteTarget.id);
+      if (record) {
+        const result = await window.dataSdk.delete(record);
+        
+        if (result.isOk) {
+          showToast('Data berhasil dihapus', 'success');
+        } else {
+          showToast('Gagal menghapus data: ' + result.error.message, 'error');
+        }
+      }
+
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+      closeDeleteModal();
+    }
+
+    function editDetainee(backendId) {
+      const detainee = allData.find(d => d.__backendId === backendId);
+      if (!detainee) return;
+
+      document.getElementById('detainee-modal-title').textContent = 'Edit Data Deteni';
+      document.getElementById('edit-detainee-id').value = backendId;
+      document.getElementById('input-name').value = detainee.full_name || '';
+      document.getElementById('input-nationality').value = detainee.nationality || '';
+      document.getElementById('input-passport').value = detainee.passport_number || '';
+      document.getElementById('input-dob').value = detainee.date_of_birth || '';
+      document.getElementById('input-gender').value = detainee.gender || '';
+      document.getElementById('input-entry-date').value = detainee.entry_date || '';
+      document.getElementById('input-violation').value = detainee.violation_type || '';
+      document.getElementById('input-risk').value = detainee.risk_level || '';
+      document.getElementById('input-deport-status').value = detainee.deportation_status || 'pending';
+      document.getElementById('input-dest-country').value = detainee.destination_country || '';
+      document.getElementById('input-deport-date').value = detainee.deportation_date || '';
+      document.getElementById('input-notes').value = detainee.notes || '';
+
+      // Load existing photo
+      currentPhotoData = detainee.photo_base64 || null;
+      if (currentPhotoData) {
+        const preview = document.getElementById('photo-preview');
+        preview.innerHTML = `<img src="${currentPhotoData}" alt="Foto" class="w-full h-full object-cover rounded-lg"/>`;
+      } else {
+        resetPhotoPreview();
+      }
+
+      // Check for draft for this record
+      const draftKey = 'detainee-form_' + backendId;
+      const availableDraft = autoSaveManager.drafts[draftKey];
+      if (availableDraft) {
+        showDraftRestorePrompt('detainee-form', draftKey, true);
+      }
+
+      document.getElementById('detainee-modal').classList.remove('hidden');
+      autoSaveManager.initAutoSave();
+    }
+
+    function handlePhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        currentPhotoData = event.target.result;
+        const preview = document.getElementById('photo-preview');
+        preview.innerHTML = `<img src="${currentPhotoData}" alt="Foto" class="w-full h-full object-cover rounded-lg"/>`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetPhotoPreview() {
+      const preview = document.getElementById('photo-preview');
+      preview.innerHTML = `
+        <div class="text-center">
+          <svg class="w-8 h-8 text-slate-400 mx-auto mb-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          <p class="text-xs text-slate-500">Upload Foto</p>
+        </div>
+      `;
+    }
+
+    function openLogoUploadModal() {
+      document.getElementById('logo-modal').classList.remove('hidden');
+    }
+
+    function closeLogoModal() {
+      document.getElementById('logo-modal').classList.add('hidden');
+      currentLogoData = null;
+      const placeholder = document.getElementById('logo-upload-placeholder');
+      const img = document.getElementById('logo-preview-img');
+      if (placeholder) placeholder.classList.remove('hidden');
+      if (img) img.classList.add('hidden');
+    }
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('Ukuran file terlalu besar (maksimal 5MB)', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        currentLogoData = event.target.result;
+        const preview = document.getElementById('logo-preview-img');
+        const placeholder = document.getElementById('logo-upload-placeholder');
+        preview.src = currentLogoData;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveLogo() {
+      if (!currentLogoData) {
+        showToast('Pilih gambar terlebih dahulu', 'error');
+        return;
+      }
+
+      // Update sidebar logo
+      const logoImg = document.getElementById('logo-img');
+      const logoDefault = document.getElementById('logo-default');
+      logoImg.src = currentLogoData;
+      logoImg.classList.remove('hidden');
+      logoDefault.classList.add('hidden');
+
+      // Update login screen logo display
+      const loginLogoDisplay = document.getElementById('login-logo-display');
+      const loginLogoIcon = document.getElementById('login-logo-icon');
+      loginLogoDisplay.src = currentLogoData;
+      loginLogoDisplay.classList.remove('hidden');
+      loginLogoIcon.classList.add('hidden');
+
+      closeLogoModal();
+      showToast('Logo berhasil diperbarui di seluruh sistem', 'success');
+    }
+
+    async function updateDeportationStatus(backendId) {
+      const detainee = allData.find(d => d.__backendId === backendId);
+      if (!detainee) return;
+
+      const statusOrder = ['pending', 'processing', 'scheduled', 'completed'];
+      const currentIndex = statusOrder.indexOf(detainee.deportation_status);
+      const nextStatus = statusOrder[Math.min(currentIndex + 1, statusOrder.length - 1)];
+
+      const result = await window.dataSdk.update({
+        ...detainee,
+        deportation_status: nextStatus
+      });
+
+      if (result.isOk) {
+        showToast(`Status deportasi diubah menjadi ${getStatusLabel(nextStatus)}`, 'success');
+      } else {
+        showToast('Gagal mengubah status: ' + result.error.message, 'error');
+      }
+    }
+
+    // Helper Functions
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      return new Date(dateStr).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function getRiskClass(risk) {
+      return { high: 'risk-high', medium: 'risk-medium', low: 'risk-low' }[risk] || 'risk-low';
+    }
+
+    function getRiskLabel(risk) {
+      return { high: 'Tinggi', medium: 'Sedang', low: 'Rendah' }[risk] || '-';
+    }
+
+    function getStatusClass(status) {
+      return {
+        pending: 'bg-slate-100 text-slate-700',
+        processing: 'bg-blue-100 text-blue-700',
+        scheduled: 'bg-amber-100 text-amber-700',
+        completed: 'bg-green-100 text-green-700'
+      }[status] || 'bg-slate-100 text-slate-700';
+    }
+
+    function getStatusLabel(status) {
+      return { pending: 'Menunggu', processing: 'Diproses', scheduled: 'Terjadwal', completed: 'Selesai' }[status] || '-';
+    }
+
+    function getViolationLabel(type) {
+      return {
+        overstay: 'Overstay',
+        illegal_entry: 'Masuk Ilegal',
+        fake_docs: 'Dokumen Palsu',
+        visa_violation: 'Pelanggaran Visa',
+        human_trafficking: 'Perdagangan Manusia',
+        smuggling: 'Penyelundupan',
+        other: 'Lainnya'
+      }[type] || '-';
+    }
+
+    function getBehaviorClass(status) {
+      return { good: 'bg-green-100 text-green-700', warning: 'bg-amber-100 text-amber-700', problematic: 'bg-red-100 text-red-700' }[status] || 'bg-slate-100 text-slate-700';
+    }
+
+    function getBehaviorLabel(status) {
+      return { good: 'Baik', warning: 'Perlu Perhatian', problematic: 'Bermasalah' }[status] || '-';
+    }
+
+    function getHealthClass(status) {
+      return { healthy: 'bg-green-100 text-green-700', sick: 'bg-red-100 text-red-700', needs_attention: 'bg-amber-100 text-amber-700' }[status] || 'bg-slate-100 text-slate-700';
+    }
+
+    function getHealthLabel(status) {
+      return { healthy: 'Sehat', sick: 'Sakit', needs_attention: 'Perlu Penanganan' }[status] || '-';
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastMessage = document.getElementById('toast-message');
+      
+      toastMessage.textContent = message;
+      toastIcon.innerHTML = type === 'success' 
+        ? '<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+        : '<svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+      
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    function showDraftRestorePrompt(formId, draftKey, isEdit = false) {
+      const draft = autoSaveManager.drafts[draftKey];
+      if (!draft) return;
+
+      const draftTime = new Date(draft.timestamp).toLocaleTimeString('id-ID', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+
+      const prompt = document.createElement('div');
+      prompt.className = 'fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4';
+      prompt.innerHTML = `
+        <div class="glass-card rounded-2xl w-full max-w-md overflow-hidden">
+          <div class="p-6">
+            <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 text-center mb-2">Draft Tersimpan</h3>
+            <p class="text-slate-600 text-center mb-2">Ada draft otomatis dari ${draftTime}</p>
+            <p class="text-sm text-slate-500 text-center mb-6">
+              ${draft.data.full_name || draft.data['input-name'] || 'Draft tanpa judul'}
+            </p>
+            <div class="flex justify-center gap-3">
+              <button onclick="this.closest('[class*=fixed]').remove()" class="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors">
+                Mulai Baru
+              </button>
+              <button onclick="autoSaveManager.restoreDraft('${formId}', '${draftKey}'); this.closest('[class*=fixed]').remove(); showToast('Draft berhasil dipulihkan', 'success')" class="btn-primary text-white px-6 py-2.5 rounded-lg font-medium transition-all">
+                Pulihkan Draft
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(prompt);
+    }
+
+    // Event Listeners
+    document.getElementById('filter-nationality').addEventListener('change', updateDetaineesTable);
+    document.getElementById('filter-risk').addEventListener('change', updateDetaineesTable);
+    document.getElementById('global-search').addEventListener('input', updateDetaineesTable);
+    document.getElementById('filter-note-detainee').addEventListener('change', updateDailyNotesList);
+    document.getElementById('filter-note-date').addEventListener('change', updateDailyNotesList);
+    document.getElementById('filter-deport-status').addEventListener('change', updateDeportationView);
+
+    // Sidebar Toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('-translate-x-full');
+    }
+
+    // Close sidebar when clicking on a menu item on mobile
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          toggleSidebar();
+        }
+      });
+    });
+
+    // Sidebar toggle button
+    document.getElementById('sidebar-toggle').addEventListener('click', toggleSidebar);
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.getElementById('sidebar-toggle');
+      if (window.innerWidth < 768 && 
+          !sidebar.contains(e.target) && 
+          !toggle.contains(e.target) &&
+          !sidebar.classList.contains('-translate-x-full')) {
+        toggleSidebar();
+      }
+    });
+
+    // Login Functions
+    async function handleLogin(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const btn = document.getElementById('login-btn');
+      const btnText = document.getElementById('login-btn-text');
+      const btnLoading = document.getElementById('login-btn-loading');
+
+      // Log login attempt
+      securityManager.logAudit('LOGIN_ATTEMPT', { 
+        username: username,
+        timestamp: new Date().toISOString()
+      });
+
+      // Validate credentials
+      if (!validCredentials[username] || validCredentials[username] !== password) {
+        securityManager.logAudit('LOGIN_FAILED', { 
+          username: username,
+          reason: 'Invalid credentials'
+        });
+        showToast('Username atau password salah', 'error');
+        return;
+      }
+
+      // Show loading state
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      // Simulate login delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Set logged in state
+      isLoggedIn = true;
+      currentUser = username;
+
+      // Log successful login
+      securityManager.logAudit('LOGIN_SUCCESS', { 
+        username: username,
+        sessionToken: securityManager.sessionToken,
+        timestamp: new Date().toISOString()
+      });
+
+      // Hide login screen and show app
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+
+      // Update admin visibility based on role
+      updateAdminVisibility();
+
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+
+      // Initialize the app
+      initApp();
+    }
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('login-password');
+      const eyeIcon = document.getElementById('eye-icon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+      }
+    }
+
+    function handleLoginPhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('Ukuran file terlalu besar (maksimal 5MB)', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const logoData = event.target.result;
+        const loginLogoDisplay = document.getElementById('login-logo-display');
+        const loginLogoIcon = document.getElementById('login-logo-icon');
+        loginLogoDisplay.src = logoData;
+        loginLogoDisplay.classList.remove('hidden');
+        loginLogoIcon.classList.add('hidden');
+        
+        // Store for later use when logged in
+        currentLogoData = logoData;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Admin Functions
+    function updateAdminVisibility() {
+      const adminSection = document.getElementById('admin-section');
+      const userRole = userRoles[currentUser];
+      
+      if (userRole === 'admin') {
+        adminSection.classList.remove('hidden');
+      } else {
+        adminSection.classList.add('hidden');
+      }
+    }
+
+    function saveSystemSettings() {
+      const title = document.getElementById('admin-system-title').value;
+      const institution = document.getElementById('admin-institution-name').value;
+
+      if (!title || !institution) {
+        showToast('Semua field harus diisi', 'error');
+        return;
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.setConfig({
+          system_title: title,
+          institution_name: institution
+        });
+      }
+
+      showToast('Pengaturan sistem berhasil disimpan', 'success');
+    }
+
+    function openPublicPreview() {
+      // Update preview title and institution
+      document.getElementById('preview-title').textContent = document.getElementById('system-title').textContent;
+      document.getElementById('preview-institution').textContent = document.getElementById('institution-name').textContent;
+
+      // Update preview stats
+      document.getElementById('preview-total').textContent = detainees.length;
+      document.getElementById('preview-high-risk').textContent = detainees.filter(d => d.risk_level === 'high').length;
+      document.getElementById('preview-pending').textContent = detainees.filter(d => d.deportation_status !== 'completed').length;
+      document.getElementById('preview-deported').textContent = detainees.filter(d => d.deportation_status === 'completed').length;
+
+      // Update preview table
+      const tbody = document.getElementById('preview-table-body');
+      if (detainees.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">Belum ada data deteni</td></tr>';
+      } else {
+        tbody.innerHTML = detainees.map(d => `
+          <tr class="table-row hover:bg-slate-50">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ${d.photo_base64 ? '' : 'gradient-primary flex items-center justify-center'}">
+                  ${d.photo_base64 ? `<img src="${d.photo_base64}" alt="${d.full_name}" class="w-full h-full object-cover"/>` : `<span class="text-white font-bold text-xs">${d.full_name.substring(0, 2).toUpperCase()}</span>`}
+                </div>
+                <span class="font-medium text-slate-800">${d.full_name}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-slate-700">${d.nationality}</td>
+            <td class="px-6 py-4 text-slate-700">${getViolationLabel(d.violation_type)}</td>
+            <td class="px-6 py-4">
+              <span class="status-pill ${getRiskClass(d.risk_level)}">${getRiskLabel(d.risk_level)}</span>
+            </td>
+            <td class="px-6 py-4">
+              <span class="status-pill ${getStatusClass(d.deportation_status)}">${getStatusLabel(d.deportation_status)}</span>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      document.getElementById('public-preview-modal').classList.remove('hidden');
+    }
+
+    function closePublicPreview() {
+      document.getElementById('public-preview-modal').classList.add('hidden');
+    }
+
+    function openDeleteAllModal() {
+      document.getElementById('delete-all-modal').classList.remove('hidden');
+    }
+
+    function closeDeleteAllModal() {
+      document.getElementById('delete-all-modal').classList.add('hidden');
+    }
+
+    async function confirmDeleteAll() {
+      const btn = document.getElementById('btn-confirm-delete-all');
+      const btnText = document.getElementById('btn-delete-all-text');
+      const btnLoading = document.getElementById('btn-delete-all-loading');
+      
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      try {
+        // Delete all detainees and notes
+        const deletePromises = allData.map(record => window.dataSdk.delete(record));
+        await Promise.all(deletePromises);
+
+        closeDeleteAllModal();
+        showToast('Semua data berhasil dihapus', 'success');
+      } catch (error) {
+        showToast('Gagal menghapus data: ' + error.message, 'error');
+      }
+
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+    }
+
+    function handleLogout() {
+      // Log logout
+      securityManager.logAudit('LOGOUT', { 
+        username: currentUser,
+        sessionDuration: Date.now() - securityManager.sessionStartTime
+      });
+
+      // Reset state
+      isLoggedIn = false;
+      currentUser = null;
+      allData = [];
+      detainees = [];
+      dailyNotes = [];
+      currentView = 'dashboard';
+
+      // Lock session
+      securityManager.lockSession();
+
+      // Hide app and show login
+      document.getElementById('app').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+
+      // Clear form
+      document.getElementById('login-form').reset();
+      document.getElementById('login-username').focus();
+
+      showToast('Anda telah logout', 'success');
+    }
+
+    // Landing Page Functions
+    function goToLogin() {
+      document.getElementById('public-landing').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('login-username').focus();
+    }
+
+    function backToLanding() {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('public-landing').classList.remove('hidden');
+      document.getElementById('login-form').reset();
+    }
+
+    function scrollToStats() {
+      const statsContainer = document.getElementById('landing-stats-container');
+      if (statsContainer) {
+        statsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function updateLandingPage() {
+      // Update stats
+      document.getElementById('landing-stat-total').textContent = detainees.length;
+      document.getElementById('landing-stat-high-risk').textContent = detainees.filter(d => d.risk_level === 'high').length;
+      document.getElementById('landing-stat-pending').textContent = detainees.filter(d => d.deportation_status !== 'completed').length;
+      document.getElementById('landing-stat-deported').textContent = detainees.filter(d => d.deportation_status === 'completed').length;
+      
+      // Update detainee selects for public notes
+      const landingNoteDetaineeSelect = document.getElementById('landing-note-detainee');
+      if (landingNoteDetaineeSelect) {
+        const firstOption = landingNoteDetaineeSelect.querySelector('option');
+        const currentValue = landingNoteDetaineeSelect.value;
+        landingNoteDetaineeSelect.innerHTML = '';
+        landingNoteDetaineeSelect.appendChild(firstOption);
+        detainees.forEach(d => {
+          const option = document.createElement('option');
+          option.value = d.detainee_id;
+          option.textContent = `${d.detainee_id} - ${d.full_name}`;
+          landingNoteDetaineeSelect.appendChild(option);
+        });
+        if (currentValue) landingNoteDetaineeSelect.value = currentValue;
+      }
+
+      // Update recent notes display
+      updateLandingRecentNotes();
+
+      // Update table
+      const tbody = document.getElementById('landing-table-body');
+      if (detainees.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="px-8 py-8 text-center text-slate-500">Belum ada data deteni</td></tr>';
+      } else {
+        tbody.innerHTML = detainees.slice(0, 10).map(d => `
+          <tr class="table-row hover:bg-slate-50">
+            <td class="px-8 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ${d.photo_base64 ? '' : 'gradient-primary flex items-center justify-center'}">
+                  ${d.photo_base64 ? `<img src="${d.photo_base64}" alt="${d.full_name}" class="w-full h-full object-cover"/>` : `<span class="text-white font-bold text-xs">${d.full_name.substring(0, 2).toUpperCase()}</span>`}
+                </div>
+                <span class="font-medium text-slate-800">${d.full_name}</span>
+              </div>
+            </td>
+            <td class="px-8 py-4 text-slate-700">${d.nationality}</td>
+            <td class="px-8 py-4 text-slate-700">${getViolationLabel(d.violation_type)}</td>
+            <td class="px-8 py-4 text-slate-700">${formatDate(d.entry_date)}</td>
+            <td class="px-8 py-4">
+              <span class="status-pill ${getRiskClass(d.risk_level)}">${getRiskLabel(d.risk_level)}</span>
+            </td>
+            <td class="px-8 py-4">
+              <span class="status-pill ${getStatusClass(d.deportation_status)}">${getStatusLabel(d.deportation_status)}</span>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // Update risk distribution
+      const highRiskList = document.getElementById('landing-risk-high');
+      const mediumRiskList = document.getElementById('landing-risk-medium');
+      const lowRiskList = document.getElementById('landing-risk-low');
+
+      const highRisk = detainees.filter(d => d.risk_level === 'high');
+      const mediumRisk = detainees.filter(d => d.risk_level === 'medium');
+      const lowRisk = detainees.filter(d => d.risk_level === 'low');
+
+      highRiskList.innerHTML = highRisk.length === 0 ? '<p class="text-slate-500 text-sm text-center py-4">-</p>' :
+        highRisk.slice(0, 5).map(d => `
+          <div class="flex items-center gap-2 p-3 bg-red-50 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-red-500 flex-shrink-0"></span>
+            <span class="text-sm text-red-800 font-medium truncate">${d.full_name}</span>
+          </div>
+        `).join('');
+
+      mediumRiskList.innerHTML = mediumRisk.length === 0 ? '<p class="text-slate-500 text-sm text-center py-4">-</p>' :
+        mediumRisk.slice(0, 5).map(d => `
+          <div class="flex items-center gap-2 p-3 bg-amber-50 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0"></span>
+            <span class="text-sm text-amber-800 font-medium truncate">${d.full_name}</span>
+          </div>
+        `).join('');
+
+      lowRiskList.innerHTML = lowRisk.length === 0 ? '<p class="text-slate-500 text-sm text-center py-4">-</p>' :
+        lowRisk.slice(0, 5).map(d => `
+          <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+            <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
+            <span class="text-sm text-green-800 font-medium truncate">${d.full_name}</span>
+          </div>
+        `).join('');
+
+      // Update deportation status
+      document.getElementById('landing-deport-pending').textContent = detainees.filter(d => d.deportation_status === 'pending').length;
+      document.getElementById('landing-deport-processing').textContent = detainees.filter(d => d.deportation_status === 'processing').length;
+      document.getElementById('landing-deport-scheduled').textContent = detainees.filter(d => d.deportation_status === 'scheduled').length;
+      document.getElementById('landing-deport-completed').textContent = detainees.filter(d => d.deportation_status === 'completed').length;
+
+      // Update landing title
+      document.getElementById('landing-title').textContent = document.getElementById('system-title')?.textContent || 'SIPEKA-DETENI';
+    }
+
+    async function handleLandingNoteSubmit(e) {
+      e.preventDefault();
+      
+      const btn = document.querySelector('#landing-note-form button[type="submit"]');
+      const btnText = document.getElementById('landing-btn-note-text');
+      const btnLoading = document.getElementById('landing-btn-note-loading');
+      
+      btn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      const data = {
+        type: 'daily_note',
+        id: `NOTE-${Date.now().toString(36).toUpperCase()}`,
+        detainee_id: document.getElementById('landing-note-detainee').value,
+        daily_note_date: document.getElementById('landing-note-date').value,
+        officer_name: 'Pengunjung Publik',
+        behavior_status: 'good',
+        health_status: 'healthy',
+        daily_note_content: document.getElementById('landing-note-content').value,
+        created_at: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(data);
+
+      btn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+
+      if (result.isOk) {
+        document.getElementById('landing-note-form').reset();
+        document.getElementById('landing-note-date').value = new Date().toISOString().split('T')[0];
+        showToast('Catatan harian berhasil dikirim ke sistem', 'success');
+        updateLandingPage();
+      } else {
+        showToast('Gagal menyimpan catatan: ' + result.error.message, 'error');
+      }
+    }
+
+    // Fetch and display landing page data periodically
+    setInterval(() => {
+      if (isLoggedIn === false && !document.getElementById('public-landing').classList.contains('hidden')) {
+        updateLandingPage();
+      }
+    }, 5000);
+
+    // Initialize
+    initApp();
+    autoSaveManager.initAutoSave();
+
+    // Cleanup on page unload - save any pending drafts
+    window.addEventListener('beforeunload', () => {
+      if (autoSaveManager.isDirty && autoSaveManager.currentFormType) {
+        autoSaveManager.autoSaveDraft(autoSaveManager.currentFormType);
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d677f05c2f7fd90',t:'MTc3MjUyODkwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
